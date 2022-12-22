@@ -8,7 +8,7 @@ info:
     # Auth
     To authenticate with the API, a token will be provided.
   title: Front Office API
-  version: 1.0.0
+  version: 1.0.0-rc6
 servers:
 - url: /
 security:
@@ -51,10 +51,13 @@ paths:
                 $ref: '#/components/schemas/PersonalizedDocumentsResponse'
           description: successful operation
         "400":
-          description: invalid user id.
-        "404":
-          description: user not found.
-        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: "The request is invalid. Please check the path parameters,\
+            \ queries, and the request body."
+        "409":
           content:
             application/json:
               schema:
@@ -68,7 +71,7 @@ paths:
     patch:
       description: The interaction is used to provide personalized documents to the
         user.
-      operationId: documentInteraction
+      operationId: updateUserInteractions
       parameters:
       - description: Id of the user
         in: path
@@ -81,6 +84,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/UserInteractionRequest'
+        required: true
       responses:
         "204":
           description: successful operation
@@ -104,21 +108,24 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/UserId'
+  responses:
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericError'
+      description: "The request is invalid. Please check the path parameters, queries,\
+        \ and the request body."
   schemas:
     PersonalizedDocumentData:
-      example:
-        score: 0.8008281904610115
-        id: document_id
-        properties:
-          title: News title
-          image_url: http://example.com/news_image.jpg
-          link: http://example.com/this_news
       properties:
         id:
-          description: |-
-            A document id can be any non-empty UTF-8 string that does not contain the null byte.
-            It may consist of digits, Latin letters, underscores, colons, minus signs, at signs, and dots.
-          example: document_id
+          description: "An id can be any non-empty string that consist of digits,\
+            \ latin letters, underscores, colons, minus signs, at signs, and dots."
+          example: valid_id1
+          maxLength: 256
+          minLength: 1
+          pattern: "^[a-zA-Z0-9_:@.-]+$"
           type: string
         score:
           type: number
@@ -139,44 +146,40 @@ components:
     PersonalizedDocumentsResponse:
       example:
         documents:
-        - score: 0.8008281904610115
-          id: document_id
+        - id: document_id0
+          score: 0.87
           properties:
             title: News title
-            image_url: http://example.com/news_image.jpg
-            link: http://example.com/this_news
-        - score: 0.8008281904610115
-          id: document_id
-          properties:
-            title: News title
-            image_url: http://example.com/news_image.jpg
-            link: http://example.com/this_news
       properties:
         documents:
           items:
             $ref: '#/components/schemas/PersonalizedDocumentData'
+          maxItems: 100
+          minItems: 0
           type: array
       required:
       - documents
       type: object
     PersonalizedDocumentsError:
       allOf:
-      - $ref: '#/components/schemas/BaseError'
+      - $ref: '#/components/schemas/GenericError'
       - $ref: '#/components/schemas/PersonalizedDocumentsError_allOf'
     UserInteractionType:
       enum:
-      - positive
+      - Positive
       type: string
     UserInteractionData:
       example:
-        id: document_id
+        id: valid_id1
         type: null
       properties:
         id:
-          description: |-
-            A document id can be any non-empty UTF-8 string that does not contain the null byte.
-            It may consist of digits, Latin letters, underscores, colons, minus signs, at signs, and dots.
-          example: document_id
+          description: "An id can be any non-empty string that consist of digits,\
+            \ latin letters, underscores, colons, minus signs, at signs, and dots."
+          example: valid_id1
+          maxLength: 256
+          minLength: 1
+          pattern: "^[a-zA-Z0-9_:@.-]+$"
           type: string
         type:
           $ref: '#/components/schemas/UserInteractionType'
@@ -184,34 +187,55 @@ components:
     UserInteractionRequest:
       example:
         documents:
-        - id: document_id
+        - id: valid_id1
           type: null
-        - id: document_id
+        - id: valid_id1
+          type: null
+        - id: valid_id1
+          type: null
+        - id: valid_id1
+          type: null
+        - id: valid_id1
           type: null
       properties:
         documents:
           items:
             $ref: '#/components/schemas/UserInteractionData'
+          maxItems: 1000
+          minItems: 1
           type: array
       required:
       - documents
       type: object
     UserInteractionError:
       allOf:
-      - $ref: '#/components/schemas/BaseError'
+      - $ref: '#/components/schemas/GenericError'
       - $ref: '#/components/schemas/UserInteractionError_allOf'
     UserId:
-      description: |-
-        A user id can be any non-empty UTF-8 string that does not contain the null byte.
-        It may consist of digits, Latin letters, underscores, colons, minus signs, at signs, and dots.
-      example: user_id
+      $ref: '#/components/schemas/Id'
+    Id:
+      description: "An id can be any non-empty string that consist of digits, latin\
+        \ letters, underscores, colons, minus signs, at signs, and dots."
+      example: valid_id1
+      maxLength: 256
+      minLength: 1
+      pattern: "^[a-zA-Z0-9_:@.-]+$"
       type: string
+    GenericError:
+      properties:
+        request_id:
+          description: Request ID optionally generated from the service. It can be
+            communicated to xayn to help debugging.
+          type: string
+        kind:
+          description: What kind of error this is.
+          type: string
+        details:
+          description: Additional error details. Might differ depending on debug options.
+          type: object
+      type: object
     DocumentId:
-      description: |-
-        A document id can be any non-empty UTF-8 string that does not contain the null byte.
-        It may consist of digits, Latin letters, underscores, colons, minus signs, at signs, and dots.
-      example: document_id
-      type: string
+      $ref: '#/components/schemas/Id'
     DocumentProperties:
       additionalProperties:
         $ref: '#/components/schemas/DocumentProperty'
@@ -225,22 +249,6 @@ components:
     DocumentProperty:
       description: Arbitrary property that can be attached to a document.
       example: News title
-    BaseError:
-      properties:
-        request_id:
-          description: Request ID optionally generated from the service. It can be
-            communicated to xayn to help debugging.
-          type: string
-        kind:
-          description: What kind of error this is.
-          type: string
-        details:
-          description: Additional error details. Might differ depending on debug options.
-          type: object
-      required:
-      - kind
-      - request_id
-      type: object
     PersonalizedDocumentsError_allOf:
       properties:
         kind:

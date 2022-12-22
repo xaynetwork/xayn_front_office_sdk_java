@@ -1,8 +1,8 @@
 # xayn_front_office_sdk
 
 Front Office API
-- API version: 1.0.0
-  - Build date: 2022-12-19T18:32:45.612439Z[Etc/UTC]
+- API version: 1.0.0-rc6
+  - Build date: 2022-12-22T10:37:07.988749Z[Etc/UTC]
 
 # Front Office
 The system identifies a user with only an id.
@@ -45,7 +45,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>com.xayn</groupId>
   <artifactId>xayn_front_office_sdk</artifactId>
-  <version>1.0.12</version>
+  <version>1.0.13</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -61,7 +61,7 @@ Add this dependency to your project's build file:
   }
 
   dependencies {
-     implementation "com.xayn:xayn_front_office_sdk:1.0.12"
+     implementation "com.xayn:xayn_front_office_sdk:1.0.13"
   }
 ```
 
@@ -75,90 +75,6 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/xayn_front_office_sdk-1.0.12.jar`
+* `target/xayn_front_office_sdk-1.0.13.jar`
 * `target/lib/*.jar`
-
-## Getting Started
-
-Please follow the [installation](#installation) instruction and execute the following Java code:
-
-```java
-
-// Import classes:
-import com.xayn.frontoffice.ApiClient;
-import com.xayn.frontoffice.ApiException;
-import com.xayn.frontoffice.Configuration;
-import com.xayn.frontoffice.auth.*;
-import com.xayn.frontoffice.models.*;
-import com.xayn.frontoffice.FrontOfficeApi;
-
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("http://localhost");
-    
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
-    FrontOfficeApi apiInstance = new FrontOfficeApi(defaultClient);
-    String userId = "userId_example"; // String | Id of the user
-    UserInteractionRequest userInteractionRequest = new UserInteractionRequest(); // UserInteractionRequest | 
-    try {
-      apiInstance.documentInteraction(userId, userInteractionRequest);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling FrontOfficeApi#documentInteraction");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
-    }
-  }
-}
-
-```
-
-## Documentation for API Endpoints
-
-All URIs are relative to *http://localhost*
-
-Class | Method | HTTP request | Description
------------- | ------------- | ------------- | -------------
-*FrontOfficeApi* | [**documentInteraction**](docs/FrontOfficeApi.md#documentInteraction) | **PATCH** /users/{user_id}/interactions | Add interaction between a user and a document
-*FrontOfficeApi* | [**getPersonalizedDocuments**](docs/FrontOfficeApi.md#getPersonalizedDocuments) | **GET** /users/{user_id}/personalized_documents | Get personalized documents for the user
-
-
-## Documentation for Models
-
- - [BaseError](docs/BaseError.md)
- - [PersonalizedDocumentData](docs/PersonalizedDocumentData.md)
- - [PersonalizedDocumentsError](docs/PersonalizedDocumentsError.md)
- - [PersonalizedDocumentsErrorAllOf](docs/PersonalizedDocumentsErrorAllOf.md)
- - [PersonalizedDocumentsResponse](docs/PersonalizedDocumentsResponse.md)
- - [UserInteractionData](docs/UserInteractionData.md)
- - [UserInteractionError](docs/UserInteractionError.md)
- - [UserInteractionErrorAllOf](docs/UserInteractionErrorAllOf.md)
- - [UserInteractionRequest](docs/UserInteractionRequest.md)
- - [UserInteractionType](docs/UserInteractionType.md)
-
-
-## Documentation for Authorization
-
-Authentication schemes defined for the API:
-### ApiKeyAuth
-
-- **Type**: API key
-- **API key parameter name**: authorizationToken
-- **Location**: HTTP header
-
-
-## Recommendation
-
-It's recommended to create an instance of `ApiClient` per thread in a multithreaded environment to avoid any potential issues.
-
-## Author
-
-
 
