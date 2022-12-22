@@ -2,7 +2,7 @@
 
 Front Office API
 - API version: 1.0.0-rc6
-  - Build date: 2022-12-22T11:43:27.332663Z[Etc/UTC]
+  - Build date: 2022-12-22T15:18:19.011679Z[Etc/UTC]
 
 # Front Office
 The system identifies a user with only an id.
@@ -45,7 +45,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>com.xayn</groupId>
   <artifactId>xayn_front_office_sdk</artifactId>
-  <version>1.0.14</version>
+  <version>1.0.15</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -61,7 +61,7 @@ Add this dependency to your project's build file:
   }
 
   dependencies {
-     implementation "com.xayn:xayn_front_office_sdk:1.0.14"
+     implementation "com.xayn:xayn_front_office_sdk:1.0.15"
   }
 ```
 
@@ -75,6 +75,6 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/xayn_front_office_sdk-1.0.14.jar`
+* `target/xayn_front_office_sdk-1.0.15.jar`
 * `target/lib/*.jar`
 
