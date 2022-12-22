@@ -13,7 +13,7 @@
 
 package com.xayn.frontoffice;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-12-22T10:37:07.988749Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-12-22T11:43:27.332663Z[Etc/UTC]")
 public class Pair {
     private String name = "";
     private String value = "";
