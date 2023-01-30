@@ -23,6 +23,7 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.time.OffsetDateTime;
 import java.io.Serializable;
 
 import com.google.gson.Gson;
@@ -47,86 +48,40 @@ import java.util.Set;
 import com.xayn.frontoffice.JSON;
 
 /**
- * UserInteractionErrorAllOf
+ * Mostly arbitrary properties that can be attached to a document. A key must be a valid &#x60;DocumentPropertyId&#x60;.
  */
+@ApiModel(description = "Mostly arbitrary properties that can be attached to a document. A key must be a valid `DocumentPropertyId`.")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-30T14:21:16.997Z[Etc/UTC]")
-public class UserInteractionErrorAllOf implements Serializable {
+public class DocumentProperties implements Serializable {
   private static final long serialVersionUID = 1L;
 
-  /**
-   * Gets or Sets kind
-   */
-  @JsonAdapter(KindEnum.Adapter.class)
-  public enum KindEnum {
-    INVALIDUSERID("InvalidUserId"),
-    
-    INVALIDDOCUMENTID("InvalidDocumentId");
+  public static final String SERIALIZED_NAME_PUBLICATION_DATE = "publication_date";
+  @SerializedName(SERIALIZED_NAME_PUBLICATION_DATE)
+  private OffsetDateTime publicationDate;
 
-    private String value;
-
-    KindEnum(String value) {
-      this.value = value;
-    }
-
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    public static KindEnum fromValue(String value) {
-      for (KindEnum b : KindEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-
-    public static class Adapter extends TypeAdapter<KindEnum> {
-      @Override
-      public void write(final JsonWriter jsonWriter, final KindEnum enumeration) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
-
-      @Override
-      public KindEnum read(final JsonReader jsonReader) throws IOException {
-        String value =  jsonReader.nextString();
-        return KindEnum.fromValue(value);
-      }
-    }
+  public DocumentProperties() {
   }
 
-  public static final String SERIALIZED_NAME_KIND = "kind";
-  @SerializedName(SERIALIZED_NAME_KIND)
-  private KindEnum kind;
-
-  public UserInteractionErrorAllOf() {
-  }
-
-  public UserInteractionErrorAllOf kind(KindEnum kind) {
+  public DocumentProperties publicationDate(OffsetDateTime publicationDate) {
     
-    this.kind = kind;
+    this.publicationDate = publicationDate;
     return this;
   }
 
    /**
-   * Get kind
-   * @return kind
+   * A RFC3339 compatible date-time  - can be in the future - will be converted to and then stored as UTC - sub-second resolution is not guaranteed. - while &#x60;properties.publication_date&#x60; is in the future the document will not be   returned for personalized documents, once it is no longer in the future it will   automatically be considered for personalization from then on 
+   * @return publicationDate
   **/
-  @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "2000-05-14T20:22:50Z", value = "A RFC3339 compatible date-time  - can be in the future - will be converted to and then stored as UTC - sub-second resolution is not guaranteed. - while `properties.publication_date` is in the future the document will not be   returned for personalized documents, once it is no longer in the future it will   automatically be considered for personalization from then on ")
 
-  public KindEnum getKind() {
-    return kind;
+  public OffsetDateTime getPublicationDate() {
+    return publicationDate;
   }
 
 
-  public void setKind(KindEnum kind) {
-    this.kind = kind;
+  public void setPublicationDate(OffsetDateTime publicationDate) {
+    this.publicationDate = publicationDate;
   }
 
   /**
@@ -142,9 +97,9 @@ public class UserInteractionErrorAllOf implements Serializable {
    *
    * @param key name of the property
    * @param value value of the property
-   * @return the UserInteractionErrorAllOf instance itself
+   * @return the DocumentProperties instance itself
    */
-  public UserInteractionErrorAllOf putAdditionalProperty(String key, Object value) {
+  public DocumentProperties putAdditionalProperty(String key, Object value) {
     if (this.additionalProperties == null) {
         this.additionalProperties = new HashMap<String, Object>();
     }
@@ -183,21 +138,21 @@ public class UserInteractionErrorAllOf implements Serializable {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UserInteractionErrorAllOf userInteractionErrorAllOf = (UserInteractionErrorAllOf) o;
-    return Objects.equals(this.kind, userInteractionErrorAllOf.kind)&&
-        Objects.equals(this.additionalProperties, userInteractionErrorAllOf.additionalProperties);
+    DocumentProperties documentProperties = (DocumentProperties) o;
+    return Objects.equals(this.publicationDate, documentProperties.publicationDate)&&
+        Objects.equals(this.additionalProperties, documentProperties.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(kind, additionalProperties);
+    return Objects.hash(publicationDate, additionalProperties);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class UserInteractionErrorAllOf {\n");
-    sb.append("    kind: ").append(toIndentedString(kind)).append("\n");
+    sb.append("class DocumentProperties {\n");
+    sb.append("    publicationDate: ").append(toIndentedString(publicationDate)).append("\n");
     sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -221,34 +176,23 @@ public class UserInteractionErrorAllOf implements Serializable {
   static {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
-    openapiFields.add("kind");
+    openapiFields.add("publication_date");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
-    openapiRequiredFields.add("kind");
   }
 
  /**
   * Validates the JSON Object and throws an exception if issues found
   *
   * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to UserInteractionErrorAllOf
+  * @throws IOException if the JSON Object is invalid with respect to DocumentProperties
   */
   public static void validateJsonObject(JsonObject jsonObj) throws IOException {
       if (jsonObj == null) {
-        if (!UserInteractionErrorAllOf.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
-          throw new IllegalArgumentException(String.format("The required field(s) %s in UserInteractionErrorAllOf is not found in the empty JSON string", UserInteractionErrorAllOf.openapiRequiredFields.toString()));
+        if (!DocumentProperties.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in DocumentProperties is not found in the empty JSON string", DocumentProperties.openapiRequiredFields.toString()));
         }
-      }
-
-      // check to make sure all required properties/fields are present in the JSON string
-      for (String requiredField : UserInteractionErrorAllOf.openapiRequiredFields) {
-        if (jsonObj.get(requiredField) == null) {
-          throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
-        }
-      }
-      if (!jsonObj.get("kind").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `kind` to be a primitive type in the JSON string but got `%s`", jsonObj.get("kind").toString()));
       }
   }
 
@@ -256,16 +200,16 @@ public class UserInteractionErrorAllOf implements Serializable {
     @SuppressWarnings("unchecked")
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!UserInteractionErrorAllOf.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'UserInteractionErrorAllOf' and its subtypes
+       if (!DocumentProperties.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'DocumentProperties' and its subtypes
        }
        final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<UserInteractionErrorAllOf> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(UserInteractionErrorAllOf.class));
+       final TypeAdapter<DocumentProperties> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(DocumentProperties.class));
 
-       return (TypeAdapter<T>) new TypeAdapter<UserInteractionErrorAllOf>() {
+       return (TypeAdapter<T>) new TypeAdapter<DocumentProperties>() {
            @Override
-           public void write(JsonWriter out, UserInteractionErrorAllOf value) throws IOException {
+           public void write(JsonWriter out, DocumentProperties value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
              obj.remove("additionalProperties");
              // serialize additonal properties
@@ -288,11 +232,11 @@ public class UserInteractionErrorAllOf implements Serializable {
            }
 
            @Override
-           public UserInteractionErrorAllOf read(JsonReader in) throws IOException {
+           public DocumentProperties read(JsonReader in) throws IOException {
              JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
              validateJsonObject(jsonObj);
              // store additional fields in the deserialized instance
-             UserInteractionErrorAllOf instance = thisAdapter.fromJsonTree(jsonObj);
+             DocumentProperties instance = thisAdapter.fromJsonTree(jsonObj);
              for (Map.Entry<String, JsonElement> entry : jsonObj.entrySet()) {
                if (!openapiFields.contains(entry.getKey())) {
                  if (entry.getValue().isJsonPrimitive()) { // primitive type
@@ -319,18 +263,18 @@ public class UserInteractionErrorAllOf implements Serializable {
   }
 
  /**
-  * Create an instance of UserInteractionErrorAllOf given an JSON string
+  * Create an instance of DocumentProperties given an JSON string
   *
   * @param jsonString JSON string
-  * @return An instance of UserInteractionErrorAllOf
-  * @throws IOException if the JSON string is invalid with respect to UserInteractionErrorAllOf
+  * @return An instance of DocumentProperties
+  * @throws IOException if the JSON string is invalid with respect to DocumentProperties
   */
-  public static UserInteractionErrorAllOf fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, UserInteractionErrorAllOf.class);
+  public static DocumentProperties fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, DocumentProperties.class);
   }
 
  /**
-  * Convert an instance of UserInteractionErrorAllOf to an JSON string
+  * Convert an instance of DocumentProperties to an JSON string
   *
   * @return JSON string
   */

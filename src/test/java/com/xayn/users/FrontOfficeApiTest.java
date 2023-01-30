@@ -10,8 +10,9 @@
  * Do not edit the class manually.
  */
 
-package com.xayn.frontoffice;
-
+import com.xayn.frontoffice.ApiClient;
+import com.xayn.frontoffice.ApiException;
+import com.xayn.frontoffice.FrontOfficeApi;
 import com.xayn.frontoffice.models.UserInteractionData;
 import com.xayn.frontoffice.models.UserInteractionRequest;
 import com.xayn.frontoffice.models.UserInteractionType;
@@ -21,7 +22,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -71,7 +74,7 @@ public class FrontOfficeApiTest {
     @Test
     public void getPersonalizedDocumentsTest() throws ApiException {
         try {
-            api.getPersonalizedDocuments("new_xayn_test_user", 10);
+            api.getPersonalizedDocuments("new_xayn_test_user", 10, OffsetDateTime.now());
         } catch (ApiException exception) {
             assertTrue(exception.getResponseBody().contains("NotEnoughInteractions"));
         }
