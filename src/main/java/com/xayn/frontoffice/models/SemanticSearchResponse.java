@@ -52,7 +52,7 @@ import com.xayn.frontoffice.JSON;
 /**
  * SemanticSearchResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-30T14:21:16.997Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-02-01T11:27:11.160247Z[Etc/UTC]")
 public class SemanticSearchResponse implements Serializable {
   private static final long serialVersionUID = 1L;
 
