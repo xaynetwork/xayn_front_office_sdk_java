@@ -51,7 +51,7 @@ import com.xayn.frontoffice.JSON;
 /**
  * PersonalizedDocumentData
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-02-07T10:04:30.834592Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-02-07T10:16:04.581562Z[Etc/UTC]")
 public class PersonalizedDocumentData implements Serializable {
   private static final long serialVersionUID = 1L;
 
