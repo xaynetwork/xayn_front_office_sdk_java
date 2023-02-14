@@ -21,7 +21,7 @@ info:
     Please see further down in this README.md file, or refer to the test included in this SDK's codebase, on how to set this token correctly.
     \
   title: Front Office API
-  version: 1.0.0-rc8
+  version: 1.0.0-rc9
 servers:
 - url: /
 security:
@@ -31,13 +31,55 @@ tags:
     personalized documents per user.
   name: front office
 paths:
+  /personalized_documents:
+    post:
+      description: |-
+        Returns a list of personalized documents based on interests derived
+        from a history. In difference to `getPersonalizedDocuments` any user
+        specific parts are based on the inputs only. Documents still need to
+        be ingested beforehand.
+      operationId: getStatelessPersonalizedDocuments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StatelessPersonalizedDocumentsRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatelessPersonalizedDocumentsResponse'
+          description: successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+          description: "The request is invalid. Please check the path parameters,\
+            \ queries, and the request body."
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonalizedDocumentsError'
+          description: |-
+            -| impossible to create a personalized list for given context
+            This mainly can happen if all documents in the user history do no longer exist (or were never ingested).
+      summary: Get personalized documents based on a given history.
+      tags:
+      - front office
+      x-content-type: application/json
+      x-accepts: application/json
   /users/{user_id}/personalized_documents:
     get:
       description: |-
         Returns a list of documents personalized for the given `user_id`.
         Each document contains the id, the score and the properties that are attached to the document.
         The score is a value between 0 and 1 where a higher value means that the document matches the preferences of the user better.
-        Note that you can request personalized documents for a specific `user_id`, only after that same `user_id` has made at least one interaction via our system.
+        Documents that have been interacted with by the user are filtered out from the result.
+        Note that you can request personalized documents for a specific `user_id`, only after that same `user_id` has made enough interactions via our system.
       operationId: getPersonalizedDocuments
       parameters:
       - description: Id of the user
@@ -52,11 +94,7 @@ paths:
         name: count
         required: false
         schema:
-          default: 10
-          format: int32
-          maximum: 100
-          minimum: 1
-          type: integer
+          $ref: '#/components/schemas/Count'
         style: form
       - description: |-
           Only include documents which have been published after given datetime.
@@ -148,11 +186,19 @@ paths:
         name: count
         required: false
         schema:
-          default: 10
-          format: int32
-          maximum: 100
-          minimum: 1
-          type: integer
+          $ref: '#/components/schemas/Count'
+        style: form
+      - description: Minimum similarity a document has to have to be included.
+        explode: true
+        in: query
+        name: min_similarity
+        required: false
+        schema:
+          default: 0
+          format: float
+          maximum: 1
+          minimum: 0
+          type: number
         style: form
       responses:
         "200":
@@ -197,6 +243,12 @@ components:
       description: "The request is invalid. Please check the path parameters, queries,\
         \ and the request body."
   schemas:
+    Count:
+      default: 10
+      format: int32
+      maximum: 100
+      minimum: 1
+      type: integer
     PersonalizedDocumentData:
       properties:
         id:
@@ -214,6 +266,93 @@ components:
       required:
       - id
       - score
+      type: object
+    PersonalizedDocuments:
+      items:
+        $ref: '#/components/schemas/PersonalizedDocumentData'
+      maxItems: 100
+      minItems: 0
+      type: array
+    StatelessPersonalizedDocumentsRequest:
+      example:
+        count: 8
+        history:
+        - id: valid_id1
+          timestamp: 2000-05-14T20:22:50Z
+        - id: valid_id1
+          timestamp: 2000-05-14T20:22:50Z
+        - id: valid_id1
+          timestamp: 2000-05-14T20:22:50Z
+        - id: valid_id1
+          timestamp: 2000-05-14T20:22:50Z
+        - id: valid_id1
+          timestamp: 2000-05-14T20:22:50Z
+        published_after: 2000-05-14T20:22:50Z
+      properties:
+        history:
+          description: |-
+            The history is an sequence of entries representing
+            documents visited by the user.
+
+            It is ordered from the  "oldest" interaction at index 0 to the "newest" interaction
+            at the highest index.
+
+            History entries do not need to have a timestamp, if no timestamp is given it is
+            approximated in some way based on timestamps of neighboring documents and if non
+            have a timestamp they are all assumed to have happened "just now" for simplicity.
+          items:
+            $ref: '#/components/schemas/HistoryEntry'
+          maxItems: 100
+          minItems: 1
+          type: array
+        count:
+          default: 10
+          format: int32
+          maximum: 100
+          minimum: 1
+          type: integer
+        published_after:
+          description: |
+            A RFC3339 compatible date-time
+
+            - can be in the future
+            - will be converted to and then stored as UTC
+            - sub-second resolution is not guaranteed.
+            - while `properties.publication_date` is in the future the document will not be
+              returned for personalized documents, once it is no longer in the future it will
+              automatically be considered for personalization from then on
+          example: 2000-05-14T20:22:50Z
+          format: date-time
+          maxLength: 40
+          minLength: 10
+          type: string
+      required:
+      - history
+      type: object
+    StatelessPersonalizedDocumentsResponse:
+      example:
+        warnings:
+        - historic document with id "document_id1" does not exist
+        documents:
+        - id: document_id0
+          score: 0.87
+          properties:
+            title: News title
+      properties:
+        warnings:
+          items:
+            type: string
+          maxItems: 200
+          minItems: 0
+          type: array
+        documents:
+          items:
+            $ref: '#/components/schemas/PersonalizedDocumentData'
+          maxItems: 100
+          minItems: 0
+          type: array
+      required:
+      - documents
       type: object
     PersonalizedDocumentsResponse:
       example:
@@ -300,6 +439,19 @@ components:
       allOf:
       - $ref: '#/components/schemas/GenericError'
       - $ref: '#/components/schemas/UserInteractionError_allOf'
+    GenericError:
+      properties:
+        request_id:
+          description: Request ID optionally generated from the service. It can be
+            communicated to xayn to help debugging.
+          type: string
+        kind:
+          description: What kind of error this is.
+          type: string
+        details:
+          description: Additional error details. Might differ depending on debug options.
+          type: object
+      type: object
     PublicationDate:
       description: |
         A RFC3339 compatible date-time
@@ -325,19 +477,6 @@ components:
       minLength: 1
       pattern: "^[a-zA-Z0-9_:@.\\-]+$"
       type: string
-    GenericError:
-      properties:
-        request_id:
-          description: Request ID optionally generated from the service. It can be
-            communicated to xayn to help debugging.
-          type: string
-        kind:
-          description: What kind of error this is.
-          type: string
-        details:
-          description: Additional error details. Might differ depending on debug options.
-          type: object
-      type: object
     DocumentId:
       $ref: '#/components/schemas/Id'
     DocumentProperties:
@@ -365,6 +504,62 @@ components:
           minLength: 10
           type: string
       type: object
+    History:
+      description: |-
+        The history is an sequence of entries representing
+        documents visited by the user.
+
+        It is ordered from the  "oldest" interaction at index 0 to the "newest" interaction
+        at the highest index.
+
+        History entries do not need to have a timestamp, if no timestamp is given it is
+        approximated in some way based on timestamps of neighboring documents and if non
+        have a timestamp they are all assumed to have happened "just now" for simplicity.
+      items:
+        $ref: '#/components/schemas/HistoryEntry'
+      maxItems: 100
+      minItems: 1
+      type: array
+    HistoryEntry:
+      example:
+        id: valid_id1
+        timestamp: 2000-05-14T20:22:50Z
+      properties:
+        id:
+          description: "An id can be any non-empty string that consist of digits,\
+            \ latin letters, underscores, colons, minus signs, at signs, and dots."
+          example: valid_id1
+          maxLength: 256
+          minLength: 1
+          pattern: "^[a-zA-Z0-9_:@.\\-]+$"
+          type: string
+        timestamp:
+          description: |
+            A RFC3339 compatible date-time
+
+            - can be in the future
+            - will be converted to and then stored as UTC
+            - sub-second resolution is not guaranteed.
+          example: 2000-05-14T20:22:50Z
+          format: date-time
+          maxLength: 40
+          minLength: 10
+          type: string
+      required:
+      - id
+      type: object
+    Timestamp:
+      description: |
+        A RFC3339 compatible date-time
+
+        - can be in the future
+        - will be converted to and then stored as UTC
+        - sub-second resolution is not guaranteed.
+      example: 2000-05-14T20:22:50Z
+      format: date-time
+      maxLength: 40
+      minLength: 10
+      type: string
     PersonalizedDocumentsError_allOf:
       properties:
         kind:

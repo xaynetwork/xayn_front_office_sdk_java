@@ -20,9 +20,13 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.xayn.frontoffice.models.HistoryEntry;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.io.Serializable;
 
 import com.google.gson.Gson;
@@ -47,140 +51,100 @@ import java.util.Set;
 import com.xayn.frontoffice.JSON;
 
 /**
- * UserInteractionError
+ * StatelessPersonalizedDocumentsRequest
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-02-14T18:45:18.203145Z[Etc/UTC]")
-public class UserInteractionError implements Serializable {
+public class StatelessPersonalizedDocumentsRequest implements Serializable {
   private static final long serialVersionUID = 1L;
 
-  public static final String SERIALIZED_NAME_REQUEST_ID = "request_id";
-  @SerializedName(SERIALIZED_NAME_REQUEST_ID)
-  private String requestId;
+  public static final String SERIALIZED_NAME_HISTORY = "history";
+  @SerializedName(SERIALIZED_NAME_HISTORY)
+  private List<HistoryEntry> history = new ArrayList<>();
 
-  /**
-   * Gets or Sets kind
-   */
-  @JsonAdapter(KindEnum.Adapter.class)
-  public enum KindEnum {
-    INVALIDUSERID("InvalidUserId"),
-    
-    INVALIDDOCUMENTID("InvalidDocumentId");
+  public static final String SERIALIZED_NAME_COUNT = "count";
+  @SerializedName(SERIALIZED_NAME_COUNT)
+  private Integer count = 10;
 
-    private String value;
+  public static final String SERIALIZED_NAME_PUBLISHED_AFTER = "published_after";
+  @SerializedName(SERIALIZED_NAME_PUBLISHED_AFTER)
+  private OffsetDateTime publishedAfter;
 
-    KindEnum(String value) {
-      this.value = value;
-    }
-
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    public static KindEnum fromValue(String value) {
-      for (KindEnum b : KindEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-
-    public static class Adapter extends TypeAdapter<KindEnum> {
-      @Override
-      public void write(final JsonWriter jsonWriter, final KindEnum enumeration) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
-
-      @Override
-      public KindEnum read(final JsonReader jsonReader) throws IOException {
-        String value =  jsonReader.nextString();
-        return KindEnum.fromValue(value);
-      }
-    }
+  public StatelessPersonalizedDocumentsRequest() {
   }
 
-  public static final String SERIALIZED_NAME_KIND = "kind";
-  @SerializedName(SERIALIZED_NAME_KIND)
-  private KindEnum kind;
-
-  public static final String SERIALIZED_NAME_DETAILS = "details";
-  @SerializedName(SERIALIZED_NAME_DETAILS)
-  private Object details;
-
-  public UserInteractionError() {
+  public StatelessPersonalizedDocumentsRequest history(List<HistoryEntry> history) {
+    
+    this.history = history;
+    return this;
   }
 
-  public UserInteractionError requestId(String requestId) {
-    
-    this.requestId = requestId;
+  public StatelessPersonalizedDocumentsRequest addHistoryItem(HistoryEntry historyItem) {
+    this.history.add(historyItem);
     return this;
   }
 
    /**
-   * Request ID optionally generated from the service. It can be communicated to xayn to help debugging.
-   * @return requestId
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "Request ID optionally generated from the service. It can be communicated to xayn to help debugging.")
-
-  public String getRequestId() {
-    return requestId;
-  }
-
-
-  public void setRequestId(String requestId) {
-    this.requestId = requestId;
-  }
-
-
-  public UserInteractionError kind(KindEnum kind) {
-    
-    this.kind = kind;
-    return this;
-  }
-
-   /**
-   * Get kind
-   * @return kind
+   * The history is an sequence of entries representing documents visited by the user.  It is ordered from the  \&quot;oldest\&quot; interaction at index 0 to the \&quot;newest\&quot; interaction at the highest index.  History entries do not need to have a timestamp, if no timestamp is given it is approximated in some way based on timestamps of neighboring documents and if non have a timestamp they are all assumed to have happened \&quot;just now\&quot; for simplicity.
+   * @return history
   **/
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @ApiModelProperty(required = true, value = "The history is an sequence of entries representing documents visited by the user.  It is ordered from the  \"oldest\" interaction at index 0 to the \"newest\" interaction at the highest index.  History entries do not need to have a timestamp, if no timestamp is given it is approximated in some way based on timestamps of neighboring documents and if non have a timestamp they are all assumed to have happened \"just now\" for simplicity.")
 
-  public KindEnum getKind() {
-    return kind;
+  public List<HistoryEntry> getHistory() {
+    return history;
   }
 
 
-  public void setKind(KindEnum kind) {
-    this.kind = kind;
+  public void setHistory(List<HistoryEntry> history) {
+    this.history = history;
   }
 
 
-  public UserInteractionError details(Object details) {
+  public StatelessPersonalizedDocumentsRequest count(Integer count) {
     
-    this.details = details;
+    this.count = count;
     return this;
   }
 
    /**
-   * Additional error details. Might differ depending on debug options.
-   * @return details
+   * Get count
+   * minimum: 1
+   * maximum: 100
+   * @return count
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Additional error details. Might differ depending on debug options.")
+  @ApiModelProperty(value = "")
 
-  public Object getDetails() {
-    return details;
+  public Integer getCount() {
+    return count;
   }
 
 
-  public void setDetails(Object details) {
-    this.details = details;
+  public void setCount(Integer count) {
+    this.count = count;
+  }
+
+
+  public StatelessPersonalizedDocumentsRequest publishedAfter(OffsetDateTime publishedAfter) {
+    
+    this.publishedAfter = publishedAfter;
+    return this;
+  }
+
+   /**
+   * A RFC3339 compatible date-time  - can be in the future - will be converted to and then stored as UTC - sub-second resolution is not guaranteed. - while &#x60;properties.publication_date&#x60; is in the future the document will not be   returned for personalized documents, once it is no longer in the future it will   automatically be considered for personalization from then on 
+   * @return publishedAfter
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "2000-05-14T20:22:50Z", value = "A RFC3339 compatible date-time  - can be in the future - will be converted to and then stored as UTC - sub-second resolution is not guaranteed. - while `properties.publication_date` is in the future the document will not be   returned for personalized documents, once it is no longer in the future it will   automatically be considered for personalization from then on ")
+
+  public OffsetDateTime getPublishedAfter() {
+    return publishedAfter;
+  }
+
+
+  public void setPublishedAfter(OffsetDateTime publishedAfter) {
+    this.publishedAfter = publishedAfter;
   }
 
   /**
@@ -196,9 +160,9 @@ public class UserInteractionError implements Serializable {
    *
    * @param key name of the property
    * @param value value of the property
-   * @return the UserInteractionError instance itself
+   * @return the StatelessPersonalizedDocumentsRequest instance itself
    */
-  public UserInteractionError putAdditionalProperty(String key, Object value) {
+  public StatelessPersonalizedDocumentsRequest putAdditionalProperty(String key, Object value) {
     if (this.additionalProperties == null) {
         this.additionalProperties = new HashMap<String, Object>();
     }
@@ -237,25 +201,25 @@ public class UserInteractionError implements Serializable {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UserInteractionError userInteractionError = (UserInteractionError) o;
-    return Objects.equals(this.requestId, userInteractionError.requestId) &&
-        Objects.equals(this.kind, userInteractionError.kind) &&
-        Objects.equals(this.details, userInteractionError.details)&&
-        Objects.equals(this.additionalProperties, userInteractionError.additionalProperties);
+    StatelessPersonalizedDocumentsRequest statelessPersonalizedDocumentsRequest = (StatelessPersonalizedDocumentsRequest) o;
+    return Objects.equals(this.history, statelessPersonalizedDocumentsRequest.history) &&
+        Objects.equals(this.count, statelessPersonalizedDocumentsRequest.count) &&
+        Objects.equals(this.publishedAfter, statelessPersonalizedDocumentsRequest.publishedAfter)&&
+        Objects.equals(this.additionalProperties, statelessPersonalizedDocumentsRequest.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(requestId, kind, details, additionalProperties);
+    return Objects.hash(history, count, publishedAfter, additionalProperties);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class UserInteractionError {\n");
-    sb.append("    requestId: ").append(toIndentedString(requestId)).append("\n");
-    sb.append("    kind: ").append(toIndentedString(kind)).append("\n");
-    sb.append("    details: ").append(toIndentedString(details)).append("\n");
+    sb.append("class StatelessPersonalizedDocumentsRequest {\n");
+    sb.append("    history: ").append(toIndentedString(history)).append("\n");
+    sb.append("    count: ").append(toIndentedString(count)).append("\n");
+    sb.append("    publishedAfter: ").append(toIndentedString(publishedAfter)).append("\n");
     sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -279,56 +243,60 @@ public class UserInteractionError implements Serializable {
   static {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
-    openapiFields.add("request_id");
-    openapiFields.add("kind");
-    openapiFields.add("details");
+    openapiFields.add("history");
+    openapiFields.add("count");
+    openapiFields.add("published_after");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
-    openapiRequiredFields.add("kind");
+    openapiRequiredFields.add("history");
   }
 
  /**
   * Validates the JSON Object and throws an exception if issues found
   *
   * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to UserInteractionError
+  * @throws IOException if the JSON Object is invalid with respect to StatelessPersonalizedDocumentsRequest
   */
   public static void validateJsonObject(JsonObject jsonObj) throws IOException {
       if (jsonObj == null) {
-        if (!UserInteractionError.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
-          throw new IllegalArgumentException(String.format("The required field(s) %s in UserInteractionError is not found in the empty JSON string", UserInteractionError.openapiRequiredFields.toString()));
+        if (!StatelessPersonalizedDocumentsRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in StatelessPersonalizedDocumentsRequest is not found in the empty JSON string", StatelessPersonalizedDocumentsRequest.openapiRequiredFields.toString()));
         }
       }
 
       // check to make sure all required properties/fields are present in the JSON string
-      for (String requiredField : UserInteractionError.openapiRequiredFields) {
+      for (String requiredField : StatelessPersonalizedDocumentsRequest.openapiRequiredFields) {
         if (jsonObj.get(requiredField) == null) {
           throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
         }
       }
-      if ((jsonObj.get("request_id") != null && !jsonObj.get("request_id").isJsonNull()) && !jsonObj.get("request_id").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `request_id` to be a primitive type in the JSON string but got `%s`", jsonObj.get("request_id").toString()));
+      // ensure the json data is an array
+      if (!jsonObj.get("history").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `history` to be an array in the JSON string but got `%s`", jsonObj.get("history").toString()));
       }
-      if (!jsonObj.get("kind").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `kind` to be a primitive type in the JSON string but got `%s`", jsonObj.get("kind").toString()));
-      }
+
+      JsonArray jsonArrayhistory = jsonObj.getAsJsonArray("history");
+      // validate the required field `history` (array)
+      for (int i = 0; i < jsonArrayhistory.size(); i++) {
+        HistoryEntry.validateJsonObject(jsonArrayhistory.get(i).getAsJsonObject());
+      };
   }
 
   public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
     @SuppressWarnings("unchecked")
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!UserInteractionError.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'UserInteractionError' and its subtypes
+       if (!StatelessPersonalizedDocumentsRequest.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'StatelessPersonalizedDocumentsRequest' and its subtypes
        }
        final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<UserInteractionError> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(UserInteractionError.class));
+       final TypeAdapter<StatelessPersonalizedDocumentsRequest> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(StatelessPersonalizedDocumentsRequest.class));
 
-       return (TypeAdapter<T>) new TypeAdapter<UserInteractionError>() {
+       return (TypeAdapter<T>) new TypeAdapter<StatelessPersonalizedDocumentsRequest>() {
            @Override
-           public void write(JsonWriter out, UserInteractionError value) throws IOException {
+           public void write(JsonWriter out, StatelessPersonalizedDocumentsRequest value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
              obj.remove("additionalProperties");
              // serialize additonal properties
@@ -351,11 +319,11 @@ public class UserInteractionError implements Serializable {
            }
 
            @Override
-           public UserInteractionError read(JsonReader in) throws IOException {
+           public StatelessPersonalizedDocumentsRequest read(JsonReader in) throws IOException {
              JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
              validateJsonObject(jsonObj);
              // store additional fields in the deserialized instance
-             UserInteractionError instance = thisAdapter.fromJsonTree(jsonObj);
+             StatelessPersonalizedDocumentsRequest instance = thisAdapter.fromJsonTree(jsonObj);
              for (Map.Entry<String, JsonElement> entry : jsonObj.entrySet()) {
                if (!openapiFields.contains(entry.getKey())) {
                  if (entry.getValue().isJsonPrimitive()) { // primitive type
@@ -382,18 +350,18 @@ public class UserInteractionError implements Serializable {
   }
 
  /**
-  * Create an instance of UserInteractionError given an JSON string
+  * Create an instance of StatelessPersonalizedDocumentsRequest given an JSON string
   *
   * @param jsonString JSON string
-  * @return An instance of UserInteractionError
-  * @throws IOException if the JSON string is invalid with respect to UserInteractionError
+  * @return An instance of StatelessPersonalizedDocumentsRequest
+  * @throws IOException if the JSON string is invalid with respect to StatelessPersonalizedDocumentsRequest
   */
-  public static UserInteractionError fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, UserInteractionError.class);
+  public static StatelessPersonalizedDocumentsRequest fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, StatelessPersonalizedDocumentsRequest.class);
   }
 
  /**
-  * Convert an instance of UserInteractionError to an JSON string
+  * Convert an instance of StatelessPersonalizedDocumentsRequest to an JSON string
   *
   * @return JSON string
   */
