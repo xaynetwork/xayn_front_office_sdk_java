@@ -21,7 +21,7 @@ info:
     Please see further down in this README.md file, or refer to the test included in this SDK's codebase, on how to set this token correctly.
     \
   title: Front Office API
-  version: 1.0.0-rc9
+  version: 1.0.0-rc10
 servers:
 - url: /
 security:
@@ -199,6 +199,16 @@ paths:
           maximum: 1
           minimum: 0
           type: number
+        style: form
+      - description: |-
+          A user for whom the documents will be personalized for.
+          If that user doesn't have enough interactions in the system, then the documents are returned unpersonalized.
+        explode: true
+        in: query
+        name: personalize_for
+        required: false
+        schema:
+          $ref: '#/components/schemas/UserId'
         style: form
       responses:
         "200":
