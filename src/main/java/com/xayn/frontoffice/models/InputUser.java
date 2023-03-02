@@ -20,7 +20,10 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.xayn.frontoffice.models.HistoryEntry;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.io.Serializable;
 
 import com.google.gson.Gson;
@@ -45,90 +48,72 @@ import java.util.Set;
 import com.xayn.frontoffice.JSON;
 
 /**
- * GenericError
+ * Information about a user provided as input for an search  Currently this can _either_ be the user&#39;s &#x60;id&#x60; or a user&#39;s &#x60;history&#x60;. 
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-02T15:01:40.978825Z[Etc/UTC]")
-public class GenericError implements Serializable {
+public class InputUser implements Serializable {
   private static final long serialVersionUID = 1L;
 
-  public static final String SERIALIZED_NAME_REQUEST_ID = "request_id";
-  @SerializedName(SERIALIZED_NAME_REQUEST_ID)
-  private String requestId;
+  public static final String SERIALIZED_NAME_ID = "id";
+  @SerializedName(SERIALIZED_NAME_ID)
+  private String id;
 
-  public static final String SERIALIZED_NAME_KIND = "kind";
-  @SerializedName(SERIALIZED_NAME_KIND)
-  private String kind;
+  public static final String SERIALIZED_NAME_HISTORY = "history";
+  @SerializedName(SERIALIZED_NAME_HISTORY)
+  private List<HistoryEntry> history = new ArrayList<>();
 
-  public static final String SERIALIZED_NAME_DETAILS = "details";
-  @SerializedName(SERIALIZED_NAME_DETAILS)
-  private Object details;
-
-  public GenericError() {
+  public InputUser() {
   }
 
-  public GenericError requestId(String requestId) {
+  public InputUser id(String id) {
     
-    this.requestId = requestId;
+    this.id = id;
     return this;
   }
 
    /**
-   * Request ID optionally generated from the service. It can be communicated to xayn to help debugging.
-   * @return requestId
+   * An id can be any non-empty string that consist of digits, latin letters, underscores, colons, minus signs, at signs, and dots.
+   * @return id
   **/
   @javax.annotation.Nullable
 
-  public String getRequestId() {
-    return requestId;
+  public String getId() {
+    return id;
   }
 
 
-  public void setRequestId(String requestId) {
-    this.requestId = requestId;
+  public void setId(String id) {
+    this.id = id;
   }
 
 
-  public GenericError kind(String kind) {
+  public InputUser history(List<HistoryEntry> history) {
     
-    this.kind = kind;
+    this.history = history;
+    return this;
+  }
+
+  public InputUser addHistoryItem(HistoryEntry historyItem) {
+    if (this.history == null) {
+      this.history = new ArrayList<>();
+    }
+    this.history.add(historyItem);
     return this;
   }
 
    /**
-   * What kind of error this is.
-   * @return kind
+   * The history is an sequence of entries representing documents visited by the user.  It is ordered from the  \&quot;oldest\&quot; interaction at index 0 to the \&quot;newest\&quot; interaction at the highest index.  History entries do not need to have a timestamp, if no timestamp is given it is approximated in some way based on timestamps of neighboring documents and if non have a timestamp they are all assumed to have happened \&quot;just now\&quot; for simplicity.
+   * @return history
   **/
   @javax.annotation.Nullable
 
-  public String getKind() {
-    return kind;
+  public List<HistoryEntry> getHistory() {
+    return history;
   }
 
 
-  public void setKind(String kind) {
-    this.kind = kind;
-  }
-
-
-  public GenericError details(Object details) {
-    
-    this.details = details;
-    return this;
-  }
-
-   /**
-   * Additional error details. Might differ depending on debug options.
-   * @return details
-  **/
-  @javax.annotation.Nullable
-
-  public Object getDetails() {
-    return details;
-  }
-
-
-  public void setDetails(Object details) {
-    this.details = details;
+  public void setHistory(List<HistoryEntry> history) {
+    this.history = history;
   }
 
   /**
@@ -144,9 +129,9 @@ public class GenericError implements Serializable {
    *
    * @param key name of the property
    * @param value value of the property
-   * @return the GenericError instance itself
+   * @return the InputUser instance itself
    */
-  public GenericError putAdditionalProperty(String key, Object value) {
+  public InputUser putAdditionalProperty(String key, Object value) {
     if (this.additionalProperties == null) {
         this.additionalProperties = new HashMap<String, Object>();
     }
@@ -185,25 +170,23 @@ public class GenericError implements Serializable {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    GenericError genericError = (GenericError) o;
-    return Objects.equals(this.requestId, genericError.requestId) &&
-        Objects.equals(this.kind, genericError.kind) &&
-        Objects.equals(this.details, genericError.details)&&
-        Objects.equals(this.additionalProperties, genericError.additionalProperties);
+    InputUser inputUser = (InputUser) o;
+    return Objects.equals(this.id, inputUser.id) &&
+        Objects.equals(this.history, inputUser.history)&&
+        Objects.equals(this.additionalProperties, inputUser.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(requestId, kind, details, additionalProperties);
+    return Objects.hash(id, history, additionalProperties);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class GenericError {\n");
-    sb.append("    requestId: ").append(toIndentedString(requestId)).append("\n");
-    sb.append("    kind: ").append(toIndentedString(kind)).append("\n");
-    sb.append("    details: ").append(toIndentedString(details)).append("\n");
+    sb.append("class InputUser {\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    history: ").append(toIndentedString(history)).append("\n");
     sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -227,9 +210,8 @@ public class GenericError implements Serializable {
   static {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
-    openapiFields.add("request_id");
-    openapiFields.add("kind");
-    openapiFields.add("details");
+    openapiFields.add("id");
+    openapiFields.add("history");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -239,19 +221,30 @@ public class GenericError implements Serializable {
   * Validates the JSON Object and throws an exception if issues found
   *
   * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to GenericError
+  * @throws IOException if the JSON Object is invalid with respect to InputUser
   */
   public static void validateJsonObject(JsonObject jsonObj) throws IOException {
       if (jsonObj == null) {
-        if (!GenericError.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
-          throw new IllegalArgumentException(String.format("The required field(s) %s in GenericError is not found in the empty JSON string", GenericError.openapiRequiredFields.toString()));
+        if (!InputUser.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in InputUser is not found in the empty JSON string", InputUser.openapiRequiredFields.toString()));
         }
       }
-      if ((jsonObj.get("request_id") != null && !jsonObj.get("request_id").isJsonNull()) && !jsonObj.get("request_id").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `request_id` to be a primitive type in the JSON string but got `%s`", jsonObj.get("request_id").toString()));
+      if ((jsonObj.get("id") != null && !jsonObj.get("id").isJsonNull()) && !jsonObj.get("id").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `id` to be a primitive type in the JSON string but got `%s`", jsonObj.get("id").toString()));
       }
-      if ((jsonObj.get("kind") != null && !jsonObj.get("kind").isJsonNull()) && !jsonObj.get("kind").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `kind` to be a primitive type in the JSON string but got `%s`", jsonObj.get("kind").toString()));
+      if (jsonObj.get("history") != null && !jsonObj.get("history").isJsonNull()) {
+        JsonArray jsonArrayhistory = jsonObj.getAsJsonArray("history");
+        if (jsonArrayhistory != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("history").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `history` to be an array in the JSON string but got `%s`", jsonObj.get("history").toString()));
+          }
+
+          // validate the optional field `history` (array)
+          for (int i = 0; i < jsonArrayhistory.size(); i++) {
+            HistoryEntry.validateJsonObject(jsonArrayhistory.get(i).getAsJsonObject());
+          };
+        }
       }
   }
 
@@ -259,16 +252,16 @@ public class GenericError implements Serializable {
     @SuppressWarnings("unchecked")
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!GenericError.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'GenericError' and its subtypes
+       if (!InputUser.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'InputUser' and its subtypes
        }
        final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<GenericError> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(GenericError.class));
+       final TypeAdapter<InputUser> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(InputUser.class));
 
-       return (TypeAdapter<T>) new TypeAdapter<GenericError>() {
+       return (TypeAdapter<T>) new TypeAdapter<InputUser>() {
            @Override
-           public void write(JsonWriter out, GenericError value) throws IOException {
+           public void write(JsonWriter out, InputUser value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
              obj.remove("additionalProperties");
              // serialize additional properties
@@ -291,11 +284,11 @@ public class GenericError implements Serializable {
            }
 
            @Override
-           public GenericError read(JsonReader in) throws IOException {
+           public InputUser read(JsonReader in) throws IOException {
              JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
              validateJsonObject(jsonObj);
              // store additional fields in the deserialized instance
-             GenericError instance = thisAdapter.fromJsonTree(jsonObj);
+             InputUser instance = thisAdapter.fromJsonTree(jsonObj);
              for (Map.Entry<String, JsonElement> entry : jsonObj.entrySet()) {
                if (!openapiFields.contains(entry.getKey())) {
                  if (entry.getValue().isJsonPrimitive()) { // primitive type
@@ -322,18 +315,18 @@ public class GenericError implements Serializable {
   }
 
  /**
-  * Create an instance of GenericError given an JSON string
+  * Create an instance of InputUser given an JSON string
   *
   * @param jsonString JSON string
-  * @return An instance of GenericError
-  * @throws IOException if the JSON string is invalid with respect to GenericError
+  * @return An instance of InputUser
+  * @throws IOException if the JSON string is invalid with respect to InputUser
   */
-  public static GenericError fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, GenericError.class);
+  public static InputUser fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, InputUser.class);
   }
 
  /**
-  * Convert an instance of GenericError to an JSON string
+  * Convert an instance of InputUser to an JSON string
   *
   * @return JSON string
   */

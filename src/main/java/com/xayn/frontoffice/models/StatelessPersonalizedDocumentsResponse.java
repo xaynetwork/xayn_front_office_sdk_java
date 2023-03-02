@@ -21,8 +21,6 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import com.xayn.frontoffice.models.PersonalizedDocumentData;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,13 +50,13 @@ import com.xayn.frontoffice.JSON;
 /**
  * StatelessPersonalizedDocumentsResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-02-23T10:30:24.478701Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-02T15:01:40.978825Z[Etc/UTC]")
 public class StatelessPersonalizedDocumentsResponse implements Serializable {
   private static final long serialVersionUID = 1L;
 
   public static final String SERIALIZED_NAME_WARNINGS = "warnings";
   @SerializedName(SERIALIZED_NAME_WARNINGS)
-  private List<String> warnings = null;
+  private List<String> warnings = new ArrayList<>();
 
   public static final String SERIALIZED_NAME_DOCUMENTS = "documents";
   @SerializedName(SERIALIZED_NAME_DOCUMENTS)
@@ -86,7 +84,6 @@ public class StatelessPersonalizedDocumentsResponse implements Serializable {
    * @return warnings
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<String> getWarnings() {
     return warnings;
@@ -114,7 +111,6 @@ public class StatelessPersonalizedDocumentsResponse implements Serializable {
    * @return documents
   **/
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
 
   public List<PersonalizedDocumentData> getDocuments() {
     return documents;
@@ -278,7 +274,7 @@ public class StatelessPersonalizedDocumentsResponse implements Serializable {
            public void write(JsonWriter out, StatelessPersonalizedDocumentsResponse value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
              obj.remove("additionalProperties");
-             // serialize additonal properties
+             // serialize additional properties
              if (value.getAdditionalProperties() != null) {
                for (Map.Entry<String, Object> entry : value.getAdditionalProperties().entrySet()) {
                  if (entry.getValue() instanceof String)

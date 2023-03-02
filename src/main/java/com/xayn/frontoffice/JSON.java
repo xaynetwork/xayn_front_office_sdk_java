@@ -96,10 +96,13 @@ public class JSON {
         gsonBuilder.registerTypeAdapterFactory(new com.xayn.frontoffice.models.DocumentProperties.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.xayn.frontoffice.models.GenericError.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.xayn.frontoffice.models.HistoryEntry.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.xayn.frontoffice.models.InputUser.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.xayn.frontoffice.models.PersonalizedDocumentData.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.xayn.frontoffice.models.PersonalizedDocumentsError.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.xayn.frontoffice.models.PersonalizedDocumentsErrorAllOf.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.xayn.frontoffice.models.PersonalizedDocumentsResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.xayn.frontoffice.models.SemanticSearchRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.xayn.frontoffice.models.SemanticSearchRequestPersonalize.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.xayn.frontoffice.models.SemanticSearchResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.xayn.frontoffice.models.StatelessPersonalizedDocumentsRequest.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.xayn.frontoffice.models.StatelessPersonalizedDocumentsResponse.CustomTypeAdapterFactory());

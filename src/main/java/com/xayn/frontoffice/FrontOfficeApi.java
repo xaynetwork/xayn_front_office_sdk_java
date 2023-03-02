@@ -31,6 +31,7 @@ import com.xayn.frontoffice.models.GenericError;
 import java.time.OffsetDateTime;
 import com.xayn.frontoffice.models.PersonalizedDocumentsError;
 import com.xayn.frontoffice.models.PersonalizedDocumentsResponse;
+import com.xayn.frontoffice.models.SemanticSearchRequest;
 import com.xayn.frontoffice.models.SemanticSearchResponse;
 import com.xayn.frontoffice.models.StatelessPersonalizedDocumentsRequest;
 import com.xayn.frontoffice.models.StatelessPersonalizedDocumentsResponse;
@@ -230,10 +231,7 @@ public class FrontOfficeApi {
     }
     /**
      * Build call for getSimilarDocuments
-     * @param documentId Id of the document (required)
-     * @param count Maximum number of semantic similar documents to return (optional, default to 10)
-     * @param minSimilarity Minimum similarity a document has to have to be included. (optional, default to 0)
-     * @param personalizeFor A user for whom the documents will be personalized for. If that user doesn&#39;t have enough interactions in the system, then the documents are returned unpersonalized. (optional)
+     * @param semanticSearchRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -244,7 +242,7 @@ public class FrontOfficeApi {
         <tr><td> 400 </td><td> The request is invalid. Please check the path parameters, queries, and the request body. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getSimilarDocumentsCall(String documentId, Integer count, Float minSimilarity, String personalizeFor, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call getSimilarDocumentsCall(SemanticSearchRequest semanticSearchRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -258,29 +256,16 @@ public class FrontOfficeApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = semanticSearchRequest;
 
         // create path and map variables
-        String localVarPath = "/semantic_search/{document_id}"
-            .replace("{" + "document_id" + "}", localVarApiClient.escapeString(documentId.toString()));
+        String localVarPath = "/semantic_search";
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        if (count != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("count", count));
-        }
-
-        if (minSimilarity != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("min_similarity", minSimilarity));
-        }
-
-        if (personalizeFor != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("personalize_for", personalizeFor));
-        }
 
         final String[] localVarAccepts = {
             "application/json"
@@ -291,6 +276,7 @@ public class FrontOfficeApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -298,27 +284,24 @@ public class FrontOfficeApi {
         }
 
         String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getSimilarDocumentsValidateBeforeCall(String documentId, Integer count, Float minSimilarity, String personalizeFor, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'documentId' is set
-        if (documentId == null) {
-            throw new ApiException("Missing the required parameter 'documentId' when calling getSimilarDocuments(Async)");
+    private okhttp3.Call getSimilarDocumentsValidateBeforeCall(SemanticSearchRequest semanticSearchRequest, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'semanticSearchRequest' is set
+        if (semanticSearchRequest == null) {
+            throw new ApiException("Missing the required parameter 'semanticSearchRequest' when calling getSimilarDocuments(Async)");
         }
 
-        return getSimilarDocumentsCall(documentId, count, minSimilarity, personalizeFor, _callback);
+        return getSimilarDocumentsCall(semanticSearchRequest, _callback);
 
     }
 
     /**
      * Returns documents similar to the given document.
      * Returns a list of documents that are semantically similar to the one given as input. Each document contains the id, the score and the properties. The score is a value between 0 and 1 where a higher value means that the document is more similar to the one in input
-     * @param documentId Id of the document (required)
-     * @param count Maximum number of semantic similar documents to return (optional, default to 10)
-     * @param minSimilarity Minimum similarity a document has to have to be included. (optional, default to 0)
-     * @param personalizeFor A user for whom the documents will be personalized for. If that user doesn&#39;t have enough interactions in the system, then the documents are returned unpersonalized. (optional)
+     * @param semanticSearchRequest  (required)
      * @return SemanticSearchResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -328,18 +311,15 @@ public class FrontOfficeApi {
         <tr><td> 400 </td><td> The request is invalid. Please check the path parameters, queries, and the request body. </td><td>  -  </td></tr>
      </table>
      */
-    public SemanticSearchResponse getSimilarDocuments(String documentId, Integer count, Float minSimilarity, String personalizeFor) throws ApiException {
-        ApiResponse<SemanticSearchResponse> localVarResp = getSimilarDocumentsWithHttpInfo(documentId, count, minSimilarity, personalizeFor);
+    public SemanticSearchResponse getSimilarDocuments(SemanticSearchRequest semanticSearchRequest) throws ApiException {
+        ApiResponse<SemanticSearchResponse> localVarResp = getSimilarDocumentsWithHttpInfo(semanticSearchRequest);
         return localVarResp.getData();
     }
 
     /**
      * Returns documents similar to the given document.
      * Returns a list of documents that are semantically similar to the one given as input. Each document contains the id, the score and the properties. The score is a value between 0 and 1 where a higher value means that the document is more similar to the one in input
-     * @param documentId Id of the document (required)
-     * @param count Maximum number of semantic similar documents to return (optional, default to 10)
-     * @param minSimilarity Minimum similarity a document has to have to be included. (optional, default to 0)
-     * @param personalizeFor A user for whom the documents will be personalized for. If that user doesn&#39;t have enough interactions in the system, then the documents are returned unpersonalized. (optional)
+     * @param semanticSearchRequest  (required)
      * @return ApiResponse&lt;SemanticSearchResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -349,8 +329,8 @@ public class FrontOfficeApi {
         <tr><td> 400 </td><td> The request is invalid. Please check the path parameters, queries, and the request body. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<SemanticSearchResponse> getSimilarDocumentsWithHttpInfo(String documentId, Integer count, Float minSimilarity, String personalizeFor) throws ApiException {
-        okhttp3.Call localVarCall = getSimilarDocumentsValidateBeforeCall(documentId, count, minSimilarity, personalizeFor, null);
+    public ApiResponse<SemanticSearchResponse> getSimilarDocumentsWithHttpInfo(SemanticSearchRequest semanticSearchRequest) throws ApiException {
+        okhttp3.Call localVarCall = getSimilarDocumentsValidateBeforeCall(semanticSearchRequest, null);
         Type localVarReturnType = new TypeToken<SemanticSearchResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -358,10 +338,7 @@ public class FrontOfficeApi {
     /**
      * Returns documents similar to the given document. (asynchronously)
      * Returns a list of documents that are semantically similar to the one given as input. Each document contains the id, the score and the properties. The score is a value between 0 and 1 where a higher value means that the document is more similar to the one in input
-     * @param documentId Id of the document (required)
-     * @param count Maximum number of semantic similar documents to return (optional, default to 10)
-     * @param minSimilarity Minimum similarity a document has to have to be included. (optional, default to 0)
-     * @param personalizeFor A user for whom the documents will be personalized for. If that user doesn&#39;t have enough interactions in the system, then the documents are returned unpersonalized. (optional)
+     * @param semanticSearchRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -372,9 +349,9 @@ public class FrontOfficeApi {
         <tr><td> 400 </td><td> The request is invalid. Please check the path parameters, queries, and the request body. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getSimilarDocumentsAsync(String documentId, Integer count, Float minSimilarity, String personalizeFor, final ApiCallback<SemanticSearchResponse> _callback) throws ApiException {
+    public okhttp3.Call getSimilarDocumentsAsync(SemanticSearchRequest semanticSearchRequest, final ApiCallback<SemanticSearchResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getSimilarDocumentsValidateBeforeCall(documentId, count, minSimilarity, personalizeFor, _callback);
+        okhttp3.Call localVarCall = getSimilarDocumentsValidateBeforeCall(semanticSearchRequest, _callback);
         Type localVarReturnType = new TypeToken<SemanticSearchResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

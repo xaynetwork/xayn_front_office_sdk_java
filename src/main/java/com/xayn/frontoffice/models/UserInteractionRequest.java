@@ -21,8 +21,6 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import com.xayn.frontoffice.models.UserInteractionData;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +50,7 @@ import com.xayn.frontoffice.JSON;
 /**
  * UserInteractionRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-02-23T10:30:24.478701Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-02T15:01:40.978825Z[Etc/UTC]")
 public class UserInteractionRequest implements Serializable {
   private static final long serialVersionUID = 1L;
 
@@ -79,7 +77,6 @@ public class UserInteractionRequest implements Serializable {
    * @return documents
   **/
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
 
   public List<UserInteractionData> getDocuments() {
     return documents;
@@ -236,7 +233,7 @@ public class UserInteractionRequest implements Serializable {
            public void write(JsonWriter out, UserInteractionRequest value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
              obj.remove("additionalProperties");
-             // serialize additonal properties
+             // serialize additional properties
              if (value.getAdditionalProperties() != null) {
                for (Map.Entry<String, Object> entry : value.getAdditionalProperties().entrySet()) {
                  if (entry.getValue() instanceof String)

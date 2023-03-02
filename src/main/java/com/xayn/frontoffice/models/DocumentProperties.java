@@ -20,8 +20,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.io.Serializable;
@@ -50,8 +48,7 @@ import com.xayn.frontoffice.JSON;
 /**
  * Mostly arbitrary properties that can be attached to a document. A key must be a valid &#x60;DocumentPropertyId&#x60;.
  */
-@ApiModel(description = "Mostly arbitrary properties that can be attached to a document. A key must be a valid `DocumentPropertyId`.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-02-23T10:30:24.478701Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-02T15:01:40.978825Z[Etc/UTC]")
 public class DocumentProperties implements Serializable {
   private static final long serialVersionUID = 1L;
 
@@ -73,7 +70,6 @@ public class DocumentProperties implements Serializable {
    * @return publicationDate
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "2000-05-14T20:22:50Z", value = "A RFC3339 compatible date-time  - can be in the future - will be converted to and then stored as UTC - sub-second resolution is not guaranteed. - while `properties.publication_date` is in the future the document will not be   returned for personalized documents, once it is no longer in the future it will   automatically be considered for personalization from then on ")
 
   public OffsetDateTime getPublicationDate() {
     return publicationDate;
@@ -212,7 +208,7 @@ public class DocumentProperties implements Serializable {
            public void write(JsonWriter out, DocumentProperties value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
              obj.remove("additionalProperties");
-             // serialize additonal properties
+             // serialize additional properties
              if (value.getAdditionalProperties() != null) {
                for (Map.Entry<String, Object> entry : value.getAdditionalProperties().entrySet()) {
                  if (entry.getValue() instanceof String)

@@ -20,6 +20,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.xayn.frontoffice.models.InputUser;
 import java.io.IOException;
 import java.io.Serializable;
 
@@ -45,90 +46,64 @@ import java.util.Set;
 import com.xayn.frontoffice.JSON;
 
 /**
- * GenericError
+ * Personalize the ranking of candidates based on a users preferences
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-02T15:01:40.978825Z[Etc/UTC]")
-public class GenericError implements Serializable {
+public class SemanticSearchRequestPersonalize implements Serializable {
   private static final long serialVersionUID = 1L;
 
-  public static final String SERIALIZED_NAME_REQUEST_ID = "request_id";
-  @SerializedName(SERIALIZED_NAME_REQUEST_ID)
-  private String requestId;
+  public static final String SERIALIZED_NAME_EXCLUDE_SEEN = "exclude_seen";
+  @SerializedName(SERIALIZED_NAME_EXCLUDE_SEEN)
+  private Boolean excludeSeen = true;
 
-  public static final String SERIALIZED_NAME_KIND = "kind";
-  @SerializedName(SERIALIZED_NAME_KIND)
-  private String kind;
+  public static final String SERIALIZED_NAME_USER = "user";
+  @SerializedName(SERIALIZED_NAME_USER)
+  private InputUser user;
 
-  public static final String SERIALIZED_NAME_DETAILS = "details";
-  @SerializedName(SERIALIZED_NAME_DETAILS)
-  private Object details;
-
-  public GenericError() {
+  public SemanticSearchRequestPersonalize() {
   }
 
-  public GenericError requestId(String requestId) {
+  public SemanticSearchRequestPersonalize excludeSeen(Boolean excludeSeen) {
     
-    this.requestId = requestId;
+    this.excludeSeen = excludeSeen;
     return this;
   }
 
    /**
-   * Request ID optionally generated from the service. It can be communicated to xayn to help debugging.
-   * @return requestId
+   * If true do not include documents the user has already seen as search candidate.  A trimmed version of the users history might be used for this filter.  This option is incompatible with not specifying a user. 
+   * @return excludeSeen
   **/
   @javax.annotation.Nullable
 
-  public String getRequestId() {
-    return requestId;
+  public Boolean getExcludeSeen() {
+    return excludeSeen;
   }
 
 
-  public void setRequestId(String requestId) {
-    this.requestId = requestId;
+  public void setExcludeSeen(Boolean excludeSeen) {
+    this.excludeSeen = excludeSeen;
   }
 
 
-  public GenericError kind(String kind) {
+  public SemanticSearchRequestPersonalize user(InputUser user) {
     
-    this.kind = kind;
+    this.user = user;
     return this;
   }
 
    /**
-   * What kind of error this is.
-   * @return kind
+   * Get user
+   * @return user
   **/
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
 
-  public String getKind() {
-    return kind;
+  public InputUser getUser() {
+    return user;
   }
 
 
-  public void setKind(String kind) {
-    this.kind = kind;
-  }
-
-
-  public GenericError details(Object details) {
-    
-    this.details = details;
-    return this;
-  }
-
-   /**
-   * Additional error details. Might differ depending on debug options.
-   * @return details
-  **/
-  @javax.annotation.Nullable
-
-  public Object getDetails() {
-    return details;
-  }
-
-
-  public void setDetails(Object details) {
-    this.details = details;
+  public void setUser(InputUser user) {
+    this.user = user;
   }
 
   /**
@@ -144,9 +119,9 @@ public class GenericError implements Serializable {
    *
    * @param key name of the property
    * @param value value of the property
-   * @return the GenericError instance itself
+   * @return the SemanticSearchRequestPersonalize instance itself
    */
-  public GenericError putAdditionalProperty(String key, Object value) {
+  public SemanticSearchRequestPersonalize putAdditionalProperty(String key, Object value) {
     if (this.additionalProperties == null) {
         this.additionalProperties = new HashMap<String, Object>();
     }
@@ -185,25 +160,23 @@ public class GenericError implements Serializable {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    GenericError genericError = (GenericError) o;
-    return Objects.equals(this.requestId, genericError.requestId) &&
-        Objects.equals(this.kind, genericError.kind) &&
-        Objects.equals(this.details, genericError.details)&&
-        Objects.equals(this.additionalProperties, genericError.additionalProperties);
+    SemanticSearchRequestPersonalize semanticSearchRequestPersonalize = (SemanticSearchRequestPersonalize) o;
+    return Objects.equals(this.excludeSeen, semanticSearchRequestPersonalize.excludeSeen) &&
+        Objects.equals(this.user, semanticSearchRequestPersonalize.user)&&
+        Objects.equals(this.additionalProperties, semanticSearchRequestPersonalize.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(requestId, kind, details, additionalProperties);
+    return Objects.hash(excludeSeen, user, additionalProperties);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class GenericError {\n");
-    sb.append("    requestId: ").append(toIndentedString(requestId)).append("\n");
-    sb.append("    kind: ").append(toIndentedString(kind)).append("\n");
-    sb.append("    details: ").append(toIndentedString(details)).append("\n");
+    sb.append("class SemanticSearchRequestPersonalize {\n");
+    sb.append("    excludeSeen: ").append(toIndentedString(excludeSeen)).append("\n");
+    sb.append("    user: ").append(toIndentedString(user)).append("\n");
     sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -227,48 +200,51 @@ public class GenericError implements Serializable {
   static {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
-    openapiFields.add("request_id");
-    openapiFields.add("kind");
-    openapiFields.add("details");
+    openapiFields.add("exclude_seen");
+    openapiFields.add("user");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
+    openapiRequiredFields.add("user");
   }
 
  /**
   * Validates the JSON Object and throws an exception if issues found
   *
   * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to GenericError
+  * @throws IOException if the JSON Object is invalid with respect to SemanticSearchRequestPersonalize
   */
   public static void validateJsonObject(JsonObject jsonObj) throws IOException {
       if (jsonObj == null) {
-        if (!GenericError.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
-          throw new IllegalArgumentException(String.format("The required field(s) %s in GenericError is not found in the empty JSON string", GenericError.openapiRequiredFields.toString()));
+        if (!SemanticSearchRequestPersonalize.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in SemanticSearchRequestPersonalize is not found in the empty JSON string", SemanticSearchRequestPersonalize.openapiRequiredFields.toString()));
         }
       }
-      if ((jsonObj.get("request_id") != null && !jsonObj.get("request_id").isJsonNull()) && !jsonObj.get("request_id").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `request_id` to be a primitive type in the JSON string but got `%s`", jsonObj.get("request_id").toString()));
+
+      // check to make sure all required properties/fields are present in the JSON string
+      for (String requiredField : SemanticSearchRequestPersonalize.openapiRequiredFields) {
+        if (jsonObj.get(requiredField) == null) {
+          throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
+        }
       }
-      if ((jsonObj.get("kind") != null && !jsonObj.get("kind").isJsonNull()) && !jsonObj.get("kind").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `kind` to be a primitive type in the JSON string but got `%s`", jsonObj.get("kind").toString()));
-      }
+      // validate the required field `user`
+      InputUser.validateJsonObject(jsonObj.getAsJsonObject("user"));
   }
 
   public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
     @SuppressWarnings("unchecked")
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!GenericError.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'GenericError' and its subtypes
+       if (!SemanticSearchRequestPersonalize.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'SemanticSearchRequestPersonalize' and its subtypes
        }
        final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<GenericError> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(GenericError.class));
+       final TypeAdapter<SemanticSearchRequestPersonalize> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(SemanticSearchRequestPersonalize.class));
 
-       return (TypeAdapter<T>) new TypeAdapter<GenericError>() {
+       return (TypeAdapter<T>) new TypeAdapter<SemanticSearchRequestPersonalize>() {
            @Override
-           public void write(JsonWriter out, GenericError value) throws IOException {
+           public void write(JsonWriter out, SemanticSearchRequestPersonalize value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
              obj.remove("additionalProperties");
              // serialize additional properties
@@ -291,11 +267,11 @@ public class GenericError implements Serializable {
            }
 
            @Override
-           public GenericError read(JsonReader in) throws IOException {
+           public SemanticSearchRequestPersonalize read(JsonReader in) throws IOException {
              JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
              validateJsonObject(jsonObj);
              // store additional fields in the deserialized instance
-             GenericError instance = thisAdapter.fromJsonTree(jsonObj);
+             SemanticSearchRequestPersonalize instance = thisAdapter.fromJsonTree(jsonObj);
              for (Map.Entry<String, JsonElement> entry : jsonObj.entrySet()) {
                if (!openapiFields.contains(entry.getKey())) {
                  if (entry.getValue().isJsonPrimitive()) { // primitive type
@@ -322,18 +298,18 @@ public class GenericError implements Serializable {
   }
 
  /**
-  * Create an instance of GenericError given an JSON string
+  * Create an instance of SemanticSearchRequestPersonalize given an JSON string
   *
   * @param jsonString JSON string
-  * @return An instance of GenericError
-  * @throws IOException if the JSON string is invalid with respect to GenericError
+  * @return An instance of SemanticSearchRequestPersonalize
+  * @throws IOException if the JSON string is invalid with respect to SemanticSearchRequestPersonalize
   */
-  public static GenericError fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, GenericError.class);
+  public static SemanticSearchRequestPersonalize fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, SemanticSearchRequestPersonalize.class);
   }
 
  /**
-  * Convert an instance of GenericError to an JSON string
+  * Convert an instance of SemanticSearchRequestPersonalize to an JSON string
   *
   * @return JSON string
   */

@@ -37,10 +37,13 @@ src/main/java/com/xayn/frontoffice/models/AbstractOpenApiSchema.java
 src/main/java/com/xayn/frontoffice/models/DocumentProperties.java
 src/main/java/com/xayn/frontoffice/models/GenericError.java
 src/main/java/com/xayn/frontoffice/models/HistoryEntry.java
+src/main/java/com/xayn/frontoffice/models/InputUser.java
 src/main/java/com/xayn/frontoffice/models/PersonalizedDocumentData.java
 src/main/java/com/xayn/frontoffice/models/PersonalizedDocumentsError.java
 src/main/java/com/xayn/frontoffice/models/PersonalizedDocumentsErrorAllOf.java
 src/main/java/com/xayn/frontoffice/models/PersonalizedDocumentsResponse.java
+src/main/java/com/xayn/frontoffice/models/SemanticSearchRequest.java
+src/main/java/com/xayn/frontoffice/models/SemanticSearchRequestPersonalize.java
 src/main/java/com/xayn/frontoffice/models/SemanticSearchResponse.java
 src/main/java/com/xayn/frontoffice/models/StatelessPersonalizedDocumentsRequest.java
 src/main/java/com/xayn/frontoffice/models/StatelessPersonalizedDocumentsResponse.java
@@ -53,10 +56,13 @@ src/test/java/com/xayn/frontoffice/FrontOfficeApiTest.java
 src/test/java/com/xayn/frontoffice/models/DocumentPropertiesTest.java
 src/test/java/com/xayn/frontoffice/models/GenericErrorTest.java
 src/test/java/com/xayn/frontoffice/models/HistoryEntryTest.java
+src/test/java/com/xayn/frontoffice/models/InputUserTest.java
 src/test/java/com/xayn/frontoffice/models/PersonalizedDocumentDataTest.java
 src/test/java/com/xayn/frontoffice/models/PersonalizedDocumentsErrorAllOfTest.java
 src/test/java/com/xayn/frontoffice/models/PersonalizedDocumentsErrorTest.java
 src/test/java/com/xayn/frontoffice/models/PersonalizedDocumentsResponseTest.java
+src/test/java/com/xayn/frontoffice/models/SemanticSearchRequestPersonalizeTest.java
+src/test/java/com/xayn/frontoffice/models/SemanticSearchRequestTest.java
 src/test/java/com/xayn/frontoffice/models/SemanticSearchResponseTest.java
 src/test/java/com/xayn/frontoffice/models/StatelessPersonalizedDocumentsRequestTest.java
 src/test/java/com/xayn/frontoffice/models/StatelessPersonalizedDocumentsResponseTest.java

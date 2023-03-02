@@ -20,8 +20,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.io.Serializable;
 
@@ -49,7 +47,7 @@ import com.xayn.frontoffice.JSON;
 /**
  * PersonalizedDocumentsError
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-02-23T10:30:24.478701Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-02T15:01:40.978825Z[Etc/UTC]")
 public class PersonalizedDocumentsError implements Serializable {
   private static final long serialVersionUID = 1L;
 
@@ -124,7 +122,6 @@ public class PersonalizedDocumentsError implements Serializable {
    * @return requestId
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Request ID optionally generated from the service. It can be communicated to xayn to help debugging.")
 
   public String getRequestId() {
     return requestId;
@@ -147,7 +144,6 @@ public class PersonalizedDocumentsError implements Serializable {
    * @return kind
   **/
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
 
   public KindEnum getKind() {
     return kind;
@@ -170,7 +166,6 @@ public class PersonalizedDocumentsError implements Serializable {
    * @return details
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Additional error details. Might differ depending on debug options.")
 
   public Object getDetails() {
     return details;
@@ -329,7 +324,7 @@ public class PersonalizedDocumentsError implements Serializable {
            public void write(JsonWriter out, PersonalizedDocumentsError value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
              obj.remove("additionalProperties");
-             // serialize additonal properties
+             // serialize additional properties
              if (value.getAdditionalProperties() != null) {
                for (Map.Entry<String, Object> entry : value.getAdditionalProperties().entrySet()) {
                  if (entry.getValue() instanceof String)

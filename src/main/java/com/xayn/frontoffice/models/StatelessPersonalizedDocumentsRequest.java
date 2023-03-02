@@ -21,8 +21,6 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import com.xayn.frontoffice.models.HistoryEntry;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -53,7 +51,7 @@ import com.xayn.frontoffice.JSON;
 /**
  * StatelessPersonalizedDocumentsRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-02-23T10:30:24.478701Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-02T15:01:40.978825Z[Etc/UTC]")
 public class StatelessPersonalizedDocumentsRequest implements Serializable {
   private static final long serialVersionUID = 1L;
 
@@ -88,7 +86,6 @@ public class StatelessPersonalizedDocumentsRequest implements Serializable {
    * @return history
   **/
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "The history is an sequence of entries representing documents visited by the user.  It is ordered from the  \"oldest\" interaction at index 0 to the \"newest\" interaction at the highest index.  History entries do not need to have a timestamp, if no timestamp is given it is approximated in some way based on timestamps of neighboring documents and if non have a timestamp they are all assumed to have happened \"just now\" for simplicity.")
 
   public List<HistoryEntry> getHistory() {
     return history;
@@ -113,7 +110,6 @@ public class StatelessPersonalizedDocumentsRequest implements Serializable {
    * @return count
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getCount() {
     return count;
@@ -136,7 +132,6 @@ public class StatelessPersonalizedDocumentsRequest implements Serializable {
    * @return publishedAfter
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "2000-05-14T20:22:50Z", value = "A RFC3339 compatible date-time  - can be in the future - will be converted to and then stored as UTC - sub-second resolution is not guaranteed. - while `properties.publication_date` is in the future the document will not be   returned for personalized documents, once it is no longer in the future it will   automatically be considered for personalization from then on ")
 
   public OffsetDateTime getPublishedAfter() {
     return publishedAfter;
@@ -299,7 +294,7 @@ public class StatelessPersonalizedDocumentsRequest implements Serializable {
            public void write(JsonWriter out, StatelessPersonalizedDocumentsRequest value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
              obj.remove("additionalProperties");
-             // serialize additonal properties
+             // serialize additional properties
              if (value.getAdditionalProperties() != null) {
                for (Map.Entry<String, Object> entry : value.getAdditionalProperties().entrySet()) {
                  if (entry.getValue() instanceof String)

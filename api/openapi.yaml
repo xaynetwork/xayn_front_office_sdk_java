@@ -166,50 +166,19 @@ paths:
       - front office
       x-content-type: application/json
       x-accepts: application/json
-  /semantic_search/{document_id}:
-    get:
+  /semantic_search:
+    post:
       description: |-
         Returns a list of documents that are semantically similar to the one given as input.
         Each document contains the id, the score and the properties.
         The score is a value between 0 and 1 where a higher value means that the document is more similar to the one in input
       operationId: getSimilarDocuments
-      parameters:
-      - description: Id of the document
-        in: path
-        name: document_id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SemanticSearchRequest'
         required: true
-        schema:
-          $ref: '#/components/schemas/DocumentId'
-      - description: Maximum number of semantic similar documents to return
-        explode: true
-        in: query
-        name: count
-        required: false
-        schema:
-          $ref: '#/components/schemas/Count'
-        style: form
-      - description: Minimum similarity a document has to have to be included.
-        explode: true
-        in: query
-        name: min_similarity
-        required: false
-        schema:
-          default: 0
-          format: float
-          maximum: 1
-          minimum: 0
-          type: number
-        style: form
-      - description: |-
-          A user for whom the documents will be personalized for.
-          If that user doesn't have enough interactions in the system, then the documents are returned unpersonalized.
-        explode: true
-        in: query
-        name: personalize_for
-        required: false
-        schema:
-          $ref: '#/components/schemas/UserId'
-        style: form
       responses:
         "200":
           content:
@@ -227,6 +196,7 @@ paths:
       summary: Returns documents similar to the given document.
       tags:
       - front office
+      x-content-type: application/json
       x-accepts: application/json
 components:
   parameters:
@@ -237,13 +207,6 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/UserId'
-    document_id:
-      description: Id of the document
-      in: path
-      name: document_id
-      required: true
-      schema:
-        $ref: '#/components/schemas/DocumentId'
   responses:
     BadRequest:
       content:
@@ -380,6 +343,69 @@ components:
           type: array
       required:
       - documents
+      type: object
+    SemanticSearchRequest:
+      example:
+        min_similarity: 0.6027456
+        count: 8
+        document_id: valid_id1
+        published_after: 2000-05-14T20:22:50Z
+        personalize:
+          exclude_seen: true
+          user:
+            id: valid_id1
+            history:
+            - id: valid_id1
+              timestamp: 2000-05-14T20:22:50Z
+            - id: valid_id1
+              timestamp: 2000-05-14T20:22:50Z
+            - id: valid_id1
+              timestamp: 2000-05-14T20:22:50Z
+            - id: valid_id1
+              timestamp: 2000-05-14T20:22:50Z
+            - id: valid_id1
+              timestamp: 2000-05-14T20:22:50Z
+      properties:
+        document_id:
+          description: "An id can be any non-empty string that consist of digits,\
+            \ latin letters, underscores, colons, minus signs, at signs, and dots."
+          example: valid_id1
+          maxLength: 256
+          minLength: 1
+          pattern: "^[a-zA-Z0-9_:@.\\-]+$"
+          type: string
+        count:
+          default: 10
+          format: int32
+          maximum: 100
+          minimum: 1
+          type: integer
+        published_after:
+          description: |
+            A RFC3339 compatible date-time
+
+            - can be in the future
+            - will be converted to and then stored as UTC
+            - sub-second resolution is not guaranteed.
+            - while `properties.publication_date` is in the future the document will not be
+              returned for personalized documents, once it is no longer in the future it will
+              automatically be considered for personalization from then on
+          example: 2000-05-14T20:22:50Z
+          format: date-time
+          maxLength: 40
+          minLength: 10
+          type: string
+        min_similarity:
+          default: 0
+          description: Minimal similarity of a document to consider it as search candidate.
+          format: float
+          maximum: 1
+          minimum: 0
+          type: number
+        personalize:
+          $ref: '#/components/schemas/SemanticSearchRequest_personalize'
+      required:
+      - document_id
       type: object
     SemanticSearchResponse:
       example:
@@ -558,6 +584,50 @@ components:
       required:
       - id
       type: object
+    InputUser:
+      description: |
+        Information about a user provided as input for an search
+
+        Currently this can _either_ be the user's `id` or a user's `history`.
+      example:
+        id: valid_id1
+        history:
+        - id: valid_id1
+          timestamp: 2000-05-14T20:22:50Z
+        - id: valid_id1
+          timestamp: 2000-05-14T20:22:50Z
+        - id: valid_id1
+          timestamp: 2000-05-14T20:22:50Z
+        - id: valid_id1
+          timestamp: 2000-05-14T20:22:50Z
+        - id: valid_id1
+          timestamp: 2000-05-14T20:22:50Z
+      properties:
+        id:
+          description: "An id can be any non-empty string that consist of digits,\
+            \ latin letters, underscores, colons, minus signs, at signs, and dots."
+          example: valid_id1
+          maxLength: 256
+          minLength: 1
+          pattern: "^[a-zA-Z0-9_:@.\\-]+$"
+          type: string
+        history:
+          description: |-
+            The history is an sequence of entries representing
+            documents visited by the user.
+
+            It is ordered from the  "oldest" interaction at index 0 to the "newest" interaction
+            at the highest index.
+
+            History entries do not need to have a timestamp, if no timestamp is given it is
+            approximated in some way based on timestamps of neighboring documents and if non
+            have a timestamp they are all assumed to have happened "just now" for simplicity.
+          items:
+            $ref: '#/components/schemas/HistoryEntry'
+          maxItems: 100
+          minItems: 1
+          type: array
+      type: object
     Timestamp:
       description: |
         A RFC3339 compatible date-time
@@ -570,6 +640,38 @@ components:
       maxLength: 40
       minLength: 10
       type: string
+    SemanticSearchRequest_personalize:
+      description: Personalize the ranking of candidates based on a users preferences
+      example:
+        exclude_seen: true
+        user:
+          id: valid_id1
+          history:
+          - id: valid_id1
+            timestamp: 2000-05-14T20:22:50Z
+          - id: valid_id1
+            timestamp: 2000-05-14T20:22:50Z
+          - id: valid_id1
+            timestamp: 2000-05-14T20:22:50Z
+          - id: valid_id1
+            timestamp: 2000-05-14T20:22:50Z
+          - id: valid_id1
+            timestamp: 2000-05-14T20:22:50Z
+      properties:
+        exclude_seen:
+          default: true
+          description: |
+            If true do not include documents the user has already seen as search candidate.
+
+            A trimmed version of the users history might be used for this filter.
+
+            This option is incompatible with not specifying a user.
+          type: boolean
+        user:
+          $ref: '#/components/schemas/InputUser'
+      required:
+      - user
+      type: object
     PersonalizedDocumentsError_allOf:
       properties:
         kind:
