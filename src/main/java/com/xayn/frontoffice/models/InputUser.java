@@ -50,7 +50,7 @@ import com.xayn.frontoffice.JSON;
 /**
  * Information about a user provided as input for an search  Currently this can _either_ be the user&#39;s &#x60;id&#x60; or a user&#39;s &#x60;history&#x60;. 
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-02T15:01:40.978825Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-07T13:31:17.563189Z[Etc/UTC]")
 public class InputUser implements Serializable {
   private static final long serialVersionUID = 1L;
 

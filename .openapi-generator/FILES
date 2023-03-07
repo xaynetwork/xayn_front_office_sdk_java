@@ -37,6 +37,7 @@ src/main/java/com/xayn/frontoffice/models/AbstractOpenApiSchema.java
 src/main/java/com/xayn/frontoffice/models/DocumentProperties.java
 src/main/java/com/xayn/frontoffice/models/GenericError.java
 src/main/java/com/xayn/frontoffice/models/HistoryEntry.java
+src/main/java/com/xayn/frontoffice/models/InputDocument.java
 src/main/java/com/xayn/frontoffice/models/InputUser.java
 src/main/java/com/xayn/frontoffice/models/PersonalizedDocumentData.java
 src/main/java/com/xayn/frontoffice/models/PersonalizedDocumentsError.java
@@ -56,6 +57,7 @@ src/test/java/com/xayn/frontoffice/FrontOfficeApiTest.java
 src/test/java/com/xayn/frontoffice/models/DocumentPropertiesTest.java
 src/test/java/com/xayn/frontoffice/models/GenericErrorTest.java
 src/test/java/com/xayn/frontoffice/models/HistoryEntryTest.java
+src/test/java/com/xayn/frontoffice/models/InputDocumentTest.java
 src/test/java/com/xayn/frontoffice/models/InputUserTest.java
 src/test/java/com/xayn/frontoffice/models/PersonalizedDocumentDataTest.java
 src/test/java/com/xayn/frontoffice/models/PersonalizedDocumentsErrorAllOfTest.java

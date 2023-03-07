@@ -21,7 +21,6 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
-import java.time.OffsetDateTime;
 import java.io.Serializable;
 
 import com.google.gson.Gson;
@@ -46,24 +45,20 @@ import java.util.Set;
 import com.xayn.frontoffice.JSON;
 
 /**
- * HistoryEntry
+ * Information about a document provided as input for an search.  Currently this can _only_ be the user&#39;s &#x60;id&#x60;, more options will be added in the future. 
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-07T13:31:17.563189Z[Etc/UTC]")
-public class HistoryEntry implements Serializable {
+public class InputDocument implements Serializable {
   private static final long serialVersionUID = 1L;
 
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
   private String id;
 
-  public static final String SERIALIZED_NAME_TIMESTAMP = "timestamp";
-  @SerializedName(SERIALIZED_NAME_TIMESTAMP)
-  private OffsetDateTime timestamp;
-
-  public HistoryEntry() {
+  public InputDocument() {
   }
 
-  public HistoryEntry id(String id) {
+  public InputDocument id(String id) {
     
     this.id = id;
     return this;
@@ -73,7 +68,7 @@ public class HistoryEntry implements Serializable {
    * An id can be any non-empty string that consist of digits, latin letters, underscores, colons, minus signs, at signs, and dots.
    * @return id
   **/
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
 
   public String getId() {
     return id;
@@ -82,28 +77,6 @@ public class HistoryEntry implements Serializable {
 
   public void setId(String id) {
     this.id = id;
-  }
-
-
-  public HistoryEntry timestamp(OffsetDateTime timestamp) {
-    
-    this.timestamp = timestamp;
-    return this;
-  }
-
-   /**
-   * A RFC3339 compatible date-time  - can be in the future - will be converted to and then stored as UTC - sub-second resolution is not guaranteed. 
-   * @return timestamp
-  **/
-  @javax.annotation.Nullable
-
-  public OffsetDateTime getTimestamp() {
-    return timestamp;
-  }
-
-
-  public void setTimestamp(OffsetDateTime timestamp) {
-    this.timestamp = timestamp;
   }
 
   /**
@@ -119,9 +92,9 @@ public class HistoryEntry implements Serializable {
    *
    * @param key name of the property
    * @param value value of the property
-   * @return the HistoryEntry instance itself
+   * @return the InputDocument instance itself
    */
-  public HistoryEntry putAdditionalProperty(String key, Object value) {
+  public InputDocument putAdditionalProperty(String key, Object value) {
     if (this.additionalProperties == null) {
         this.additionalProperties = new HashMap<String, Object>();
     }
@@ -160,23 +133,21 @@ public class HistoryEntry implements Serializable {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    HistoryEntry historyEntry = (HistoryEntry) o;
-    return Objects.equals(this.id, historyEntry.id) &&
-        Objects.equals(this.timestamp, historyEntry.timestamp)&&
-        Objects.equals(this.additionalProperties, historyEntry.additionalProperties);
+    InputDocument inputDocument = (InputDocument) o;
+    return Objects.equals(this.id, inputDocument.id)&&
+        Objects.equals(this.additionalProperties, inputDocument.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, timestamp, additionalProperties);
+    return Objects.hash(id, additionalProperties);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class HistoryEntry {\n");
+    sb.append("class InputDocument {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    timestamp: ").append(toIndentedString(timestamp)).append("\n");
     sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -201,33 +172,24 @@ public class HistoryEntry implements Serializable {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
     openapiFields.add("id");
-    openapiFields.add("timestamp");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
-    openapiRequiredFields.add("id");
   }
 
  /**
   * Validates the JSON Object and throws an exception if issues found
   *
   * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to HistoryEntry
+  * @throws IOException if the JSON Object is invalid with respect to InputDocument
   */
   public static void validateJsonObject(JsonObject jsonObj) throws IOException {
       if (jsonObj == null) {
-        if (!HistoryEntry.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
-          throw new IllegalArgumentException(String.format("The required field(s) %s in HistoryEntry is not found in the empty JSON string", HistoryEntry.openapiRequiredFields.toString()));
+        if (!InputDocument.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in InputDocument is not found in the empty JSON string", InputDocument.openapiRequiredFields.toString()));
         }
       }
-
-      // check to make sure all required properties/fields are present in the JSON string
-      for (String requiredField : HistoryEntry.openapiRequiredFields) {
-        if (jsonObj.get(requiredField) == null) {
-          throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
-        }
-      }
-      if (!jsonObj.get("id").isJsonPrimitive()) {
+      if ((jsonObj.get("id") != null && !jsonObj.get("id").isJsonNull()) && !jsonObj.get("id").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `id` to be a primitive type in the JSON string but got `%s`", jsonObj.get("id").toString()));
       }
   }
@@ -236,16 +198,16 @@ public class HistoryEntry implements Serializable {
     @SuppressWarnings("unchecked")
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!HistoryEntry.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'HistoryEntry' and its subtypes
+       if (!InputDocument.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'InputDocument' and its subtypes
        }
        final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<HistoryEntry> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(HistoryEntry.class));
+       final TypeAdapter<InputDocument> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(InputDocument.class));
 
-       return (TypeAdapter<T>) new TypeAdapter<HistoryEntry>() {
+       return (TypeAdapter<T>) new TypeAdapter<InputDocument>() {
            @Override
-           public void write(JsonWriter out, HistoryEntry value) throws IOException {
+           public void write(JsonWriter out, InputDocument value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
              obj.remove("additionalProperties");
              // serialize additional properties
@@ -268,11 +230,11 @@ public class HistoryEntry implements Serializable {
            }
 
            @Override
-           public HistoryEntry read(JsonReader in) throws IOException {
+           public InputDocument read(JsonReader in) throws IOException {
              JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
              validateJsonObject(jsonObj);
              // store additional fields in the deserialized instance
-             HistoryEntry instance = thisAdapter.fromJsonTree(jsonObj);
+             InputDocument instance = thisAdapter.fromJsonTree(jsonObj);
              for (Map.Entry<String, JsonElement> entry : jsonObj.entrySet()) {
                if (!openapiFields.contains(entry.getKey())) {
                  if (entry.getValue().isJsonPrimitive()) { // primitive type
@@ -299,18 +261,18 @@ public class HistoryEntry implements Serializable {
   }
 
  /**
-  * Create an instance of HistoryEntry given an JSON string
+  * Create an instance of InputDocument given an JSON string
   *
   * @param jsonString JSON string
-  * @return An instance of HistoryEntry
-  * @throws IOException if the JSON string is invalid with respect to HistoryEntry
+  * @return An instance of InputDocument
+  * @throws IOException if the JSON string is invalid with respect to InputDocument
   */
-  public static HistoryEntry fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, HistoryEntry.class);
+  public static InputDocument fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, InputDocument.class);
   }
 
  /**
-  * Convert an instance of HistoryEntry to an JSON string
+  * Convert an instance of InputDocument to an JSON string
   *
   * @return JSON string
   */

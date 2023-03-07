@@ -20,6 +20,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.xayn.frontoffice.models.InputDocument;
 import com.xayn.frontoffice.models.SemanticSearchRequestPersonalize;
 import java.io.IOException;
 import java.time.OffsetDateTime;
@@ -49,13 +50,13 @@ import com.xayn.frontoffice.JSON;
 /**
  * SemanticSearchRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-02T15:01:40.978825Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-07T13:31:17.563189Z[Etc/UTC]")
 public class SemanticSearchRequest implements Serializable {
   private static final long serialVersionUID = 1L;
 
-  public static final String SERIALIZED_NAME_DOCUMENT_ID = "document_id";
-  @SerializedName(SERIALIZED_NAME_DOCUMENT_ID)
-  private String documentId;
+  public static final String SERIALIZED_NAME_DOCUMENT = "document";
+  @SerializedName(SERIALIZED_NAME_DOCUMENT)
+  private InputDocument document;
 
   public static final String SERIALIZED_NAME_COUNT = "count";
   @SerializedName(SERIALIZED_NAME_COUNT)
@@ -76,25 +77,25 @@ public class SemanticSearchRequest implements Serializable {
   public SemanticSearchRequest() {
   }
 
-  public SemanticSearchRequest documentId(String documentId) {
+  public SemanticSearchRequest document(InputDocument document) {
     
-    this.documentId = documentId;
+    this.document = document;
     return this;
   }
 
    /**
-   * An id can be any non-empty string that consist of digits, latin letters, underscores, colons, minus signs, at signs, and dots.
-   * @return documentId
+   * Get document
+   * @return document
   **/
   @javax.annotation.Nonnull
 
-  public String getDocumentId() {
-    return documentId;
+  public InputDocument getDocument() {
+    return document;
   }
 
 
-  public void setDocumentId(String documentId) {
-    this.documentId = documentId;
+  public void setDocument(InputDocument document) {
+    this.document = document;
   }
 
 
@@ -244,7 +245,7 @@ public class SemanticSearchRequest implements Serializable {
       return false;
     }
     SemanticSearchRequest semanticSearchRequest = (SemanticSearchRequest) o;
-    return Objects.equals(this.documentId, semanticSearchRequest.documentId) &&
+    return Objects.equals(this.document, semanticSearchRequest.document) &&
         Objects.equals(this.count, semanticSearchRequest.count) &&
         Objects.equals(this.publishedAfter, semanticSearchRequest.publishedAfter) &&
         Objects.equals(this.minSimilarity, semanticSearchRequest.minSimilarity) &&
@@ -254,14 +255,14 @@ public class SemanticSearchRequest implements Serializable {
 
   @Override
   public int hashCode() {
-    return Objects.hash(documentId, count, publishedAfter, minSimilarity, personalize, additionalProperties);
+    return Objects.hash(document, count, publishedAfter, minSimilarity, personalize, additionalProperties);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class SemanticSearchRequest {\n");
-    sb.append("    documentId: ").append(toIndentedString(documentId)).append("\n");
+    sb.append("    document: ").append(toIndentedString(document)).append("\n");
     sb.append("    count: ").append(toIndentedString(count)).append("\n");
     sb.append("    publishedAfter: ").append(toIndentedString(publishedAfter)).append("\n");
     sb.append("    minSimilarity: ").append(toIndentedString(minSimilarity)).append("\n");
@@ -289,7 +290,7 @@ public class SemanticSearchRequest implements Serializable {
   static {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
-    openapiFields.add("document_id");
+    openapiFields.add("document");
     openapiFields.add("count");
     openapiFields.add("published_after");
     openapiFields.add("min_similarity");
@@ -297,7 +298,7 @@ public class SemanticSearchRequest implements Serializable {
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
-    openapiRequiredFields.add("document_id");
+    openapiRequiredFields.add("document");
   }
 
  /**
@@ -319,9 +320,8 @@ public class SemanticSearchRequest implements Serializable {
           throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
         }
       }
-      if (!jsonObj.get("document_id").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `document_id` to be a primitive type in the JSON string but got `%s`", jsonObj.get("document_id").toString()));
-      }
+      // validate the required field `document`
+      InputDocument.validateJsonObject(jsonObj.getAsJsonObject("document"));
       // validate the optional field `personalize`
       if (jsonObj.get("personalize") != null && !jsonObj.get("personalize").isJsonNull()) {
         SemanticSearchRequestPersonalize.validateJsonObject(jsonObj.getAsJsonObject("personalize"));

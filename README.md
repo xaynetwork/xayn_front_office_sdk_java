@@ -2,7 +2,7 @@
 
 Front Office API
 - API version: 1.0.0-rc10
-  - Build date: 2023-03-02T15:01:40.978825Z[Etc/UTC]
+  - Build date: 2023-03-07T13:31:17.563189Z[Etc/UTC]
 
 # Front Office
 The front office is typically used within front-end apps, for example a website or a mobile application.
@@ -58,7 +58,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>com.xayn</groupId>
   <artifactId>xayn_front_office_sdk</artifactId>
-  <version>1.0.26</version>
+  <version>1.0.27</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -74,7 +74,7 @@ Add this dependency to your project's build file:
   }
 
   dependencies {
-     implementation "com.xayn:xayn_front_office_sdk:1.0.26"
+     implementation "com.xayn:xayn_front_office_sdk:1.0.27"
   }
 ```
 
@@ -88,7 +88,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/xayn_front_office_sdk-1.0.26.jar`
+* `target/xayn_front_office_sdk-1.0.27.jar`
 * `target/lib/*.jar`
 
 # Getting started

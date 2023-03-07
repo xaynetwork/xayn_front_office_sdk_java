@@ -347,8 +347,9 @@ components:
     SemanticSearchRequest:
       example:
         min_similarity: 0.6027456
+        document:
+          id: valid_id1
         count: 8
-        document_id: valid_id1
         published_after: 2000-05-14T20:22:50Z
         personalize:
           exclude_seen: true
@@ -366,14 +367,8 @@ components:
             - id: valid_id1
               timestamp: 2000-05-14T20:22:50Z
       properties:
-        document_id:
-          description: "An id can be any non-empty string that consist of digits,\
-            \ latin letters, underscores, colons, minus signs, at signs, and dots."
-          example: valid_id1
-          maxLength: 256
-          minLength: 1
-          pattern: "^[a-zA-Z0-9_:@.\\-]+$"
-          type: string
+        document:
+          $ref: '#/components/schemas/InputDocument'
         count:
           default: 10
           format: int32
@@ -405,7 +400,7 @@ components:
         personalize:
           $ref: '#/components/schemas/SemanticSearchRequest_personalize'
       required:
-      - document_id
+      - document
       type: object
     SemanticSearchResponse:
       example:
@@ -583,6 +578,23 @@ components:
           type: string
       required:
       - id
+      type: object
+    InputDocument:
+      description: |
+        Information about a document provided as input for an search.
+
+        Currently this can _only_ be the user's `id`, more options will be added in the future.
+      example:
+        id: valid_id1
+      properties:
+        id:
+          description: "An id can be any non-empty string that consist of digits,\
+            \ latin letters, underscores, colons, minus signs, at signs, and dots."
+          example: valid_id1
+          maxLength: 256
+          minLength: 1
+          pattern: "^[a-zA-Z0-9_:@.\\-]+$"
+          type: string
       type: object
     InputUser:
       description: |
